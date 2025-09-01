@@ -38,3 +38,7 @@ if __name__ == "__main__":
     app = graph.compile()
     result = app.invoke({"messages": [{"role": "user", "content": "你好呀朋友"}]})
     print(result.get("messages", [])[-1].content)
+
+    # 保存图片到本地
+    graph_image = app.get_graph().draw_mermaid_png(output_file_path="agent_graph.png")
+    print("图表已保存到: agent_graph.png")
