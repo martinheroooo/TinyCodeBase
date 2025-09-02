@@ -56,6 +56,15 @@ class Tools:
         return tools
 
     def google_search(self, search_query: str):
+        """
+        Google搜索是一个通用搜索引擎，可用于访问互联网、查询百科知识、了解时事新闻等。
+
+        Args:
+            search_query: 搜索关键词或短语
+
+        Returns:
+            str: 搜索结果
+        """
         url = "https://google.serper.dev/search"
 
         payload = json.dumps({"q": search_query})
@@ -69,5 +78,15 @@ class Tools:
         return response['organic'][0]['snippet']
 
     def code_check(self, language: str, source_code: str):
+        """
+        代码检查是一个代码检查工具，可用于检查代码的错误和问题。
+
+        Args:
+            language: 语言类型全称
+            source_code: 源代码
+
+        Returns:
+            str: 代码检查结果
+        """
         return check_code(language, source_code)
 
