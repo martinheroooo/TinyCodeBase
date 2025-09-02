@@ -1,3 +1,4 @@
 *.pyc
 /storage
 .sqlite
+/tiny-universe

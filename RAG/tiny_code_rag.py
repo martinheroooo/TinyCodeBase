@@ -9,6 +9,8 @@
 @Desc    :   RAG pipeline for tiny codebase
 '''
 
+import os
+from clone_repository import clone_repository
 from llm import DoubaoLiteModel
 from vector_base import VectorStore
 from chunker_code import split_to_segmenmt
@@ -16,9 +18,22 @@ from chunker_text import ReadFiles
 from embeddings import OpenAIEmbedding
 
 if __name__ == "__main__":
+    # 设置仓库信息
+    repo_url = "https://github.com/datawhalechina/tiny-universe.git"
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)  # TinyCodeRAG根目录
+    target_dir = os.path.join(project_root, "tiny-universe")
+
+    # 自动克隆仓库
+    if not clone_repository(repo_url, target_dir):
+        print("无法克隆仓库，请尝试其他仓库")
+        exit(1)
+
     ## 1. prepare the data
-    code_docs = split_to_segmenmt("~/workspace/tiny-universe", cover_content=50)
-    text_docs = ReadFiles('~/workspace/tiny-universe').get_content(max_token_len=600, cover_content=150)
+    print("正在处理代码文档...")
+    code_docs = split_to_segmenmt(target_dir, cover_content=50)
+    print("正在处理文本文档...")
+    text_docs = ReadFiles(target_dir).get_content(max_token_len=600, cover_content=150)
 
     # Extract content strings from Documents objects
     doc_contents = [doc.content for doc in code_docs] + text_docs
