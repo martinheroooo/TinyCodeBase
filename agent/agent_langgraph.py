@@ -4,8 +4,16 @@ from typing import Annotated, Callable, Any, Dict
 from langgraph.graph.message import add_messages
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import ToolNode,tools_condition
+from aihubmix_embedding import AIHubMixEmbedding
 from config import AgentConfig
 from tools import Tools
+from langgraph.checkpoint.memory import InMemorySaver
+import sqlite3
+from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.store.memory import InMemoryStore
+
+
+
 main_agent_config = AgentConfig(
     model_name="Doubao-1.5-lite-32k",
     temperature=0.1,
@@ -16,6 +24,25 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 if __name__ == "__main__":
+    conn = sqlite3.connect("checkpoints.sqlite", check_same_thread=False)
+    memory = SqliteSaver(conn)
+
+    embeddings = AIHubMixEmbedding()
+    store = InMemoryStore(index={"embed": embeddings, "dims": 1536})
+
+    namespace = ("users", "memories")
+    store.put(  
+        namespace,  
+        "user_123",  
+        {
+            "name": "John Smith",
+            "language": "English",
+            "food_preference" : "I like pizza",
+        } 
+    )
+
+    config = {"configurable": {"thread_id": "3"}}
+
     graph = StateGraph(State)
 
     llm = ChatOpenAI(
@@ -26,7 +53,14 @@ if __name__ == "__main__":
         openai_api_base=main_agent_config.openai_base_url,
     )
 
-    tools = [Tools.google_search, Tools.code_check]
+    def get_rules(query: str)-> str:
+        """
+        获取用户规则, 用于回答用户问题
+        """
+        from langgraph.config import get_store
+        return get_store().search(namespace, query=query, limit=1)
+
+    tools = [get_rules]
     llm_with_tools = llm.bind_tools(tools)
 
     def chat_node(state: State):
@@ -45,10 +79,13 @@ if __name__ == "__main__":
     graph.add_edge("tools", "chat")
     graph.add_edge("chat", END)
 
-    app = graph.compile()
-    result = app.invoke({"messages": [{"role": "user", "content": "你好呀朋友"}]})
+    app = graph.compile(checkpointer=memory, store=store)
+    result = app.invoke(
+        input = {"messages": [{"role": "user", "content": "do you know my name?"}]},
+        config = config
+    )
     print(result.get("messages", [])[-1].content)
 
     # 保存图片到本地
-    graph_image = app.get_graph().draw_mermaid_png(output_file_path="agent_graph_with_tools.png")
-    print("图表已保存到: agent_graph_with_tools.png")
+    # graph_image = app.get_graph().draw_mermaid_png(output_file_path="agent_graph_with_memory.png")
+    # print("图表已保存到: agent_graph_with_memory.png")
