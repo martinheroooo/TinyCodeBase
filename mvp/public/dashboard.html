@@ -164,8 +164,10 @@
             }
 
             emptyState.classList.add('hidden');
+            const isProcessing = knowledgeBases.some(kb => ['cloning', 'scanning', 'analyzing'].includes(kb.status));
+            
             container.innerHTML = knowledgeBases.map(kb => `
-                <div class="bg-white overflow-hidden shadow rounded-lg">
+                <div class="bg-white overflow-hidden shadow rounded-lg" ${['cloning', 'scanning', 'analyzing'].includes(kb.status) ? 'data-processing="true"' : ''}>
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg font-medium text-gray-900">${kb.name}</h3>
                         <p class="mt-1 text-sm text-gray-500 truncate">${kb.source_url}</p>
@@ -177,12 +179,13 @@
                                 <span class="text-sm text-gray-500">${kb.progress}%</span>
                             </div>
                             <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${kb.progress}%"></div>
+                                <div class="bg-blue-600 h-2 rounded-full transition-all duration-300" style="width: ${kb.progress}%"></div>
                             </div>
                         </div>
                         <div class="mt-4 flex space-x-2">
                             <button onclick="viewKnowledgeBase(${kb.id})" 
-                                    class="flex-1 bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-200">
+                                    ${kb.status !== 'completed' ? 'disabled' : ''}
+                                    class="flex-1 bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">
                                 View
                             </button>
                             <button onclick="deleteKnowledgeBase(${kb.id})" 
@@ -249,13 +252,47 @@
             }
         }
 
-        // Placeholder functions
+        // View knowledge base
         function viewKnowledgeBase(id) {
-            showMessage('Knowledge base viewer coming soon!', 'info');
+            window.location.href = `/knowledge-base.html?id=${id}`;
         }
 
-        function deleteKnowledgeBase(id) {
-            showMessage('Delete functionality coming soon!', 'info');
+        // Delete knowledge base
+        async function deleteKnowledgeBase(id) {
+            if (!confirm('Are you sure you want to delete this knowledge base? This action cannot be undone.')) {
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_BASE}/knowledge-bases/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    showMessage('Knowledge base deleted successfully', 'success');
+                    loadKnowledgeBases();
+                } else {
+                    const data = await response.json();
+                    showMessage(data.error || 'Failed to delete knowledge base', 'error');
+                }
+            } catch (error) {
+                showMessage('Network error. Please try again.', 'error');
+            }
+        }
+
+        // Start progress polling for processing knowledge bases
+        function startProgressPolling() {
+            // Check for processing knowledge bases every 3 seconds
+            setInterval(async () => {
+                const processingCards = document.querySelectorAll('[data-processing="true"]');
+                if (processingCards.length > 0) {
+                    loadKnowledgeBases();
+                }
+            }, 3000);
         }
 
         function logout() {
@@ -286,7 +323,10 @@
         }
 
         // Initialize
-        window.onload = checkAuth;
+        window.onload = function() {
+            checkAuth();
+            startProgressPolling();
+        };
     </script>
 </body>
 </html>
