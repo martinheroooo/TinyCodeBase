@@ -2,3 +2,7 @@
 /storage
 .sqlite
 /tiny-universe
+node_modules
+.env
+.claude/
+*.sqlite

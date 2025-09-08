@@ -9,31 +9,31 @@
 ## 🗓️ 第一天：项目基础搭建和核心架构
 
 ### 🔧 环境和框架搭建
-- [ ] **初始化Node.js项目**
+- [x] **初始化Node.js项目**
   - 创建package.json，配置基础依赖：express, sequelize, sqlite3, simple-git, openai, bcryptjs, jsonwebtoken
   - 设置项目目录结构：controllers/, models/, routes/, middleware/, public/
   
-- [ ] **搭建Express服务器框架**
+- [x] **搭建Express服务器框架**
   - 创建app.js主文件，配置基础中间件（cors, body-parser, 静态文件服务）
   - 设置路由结构：/api/v1/auth, /api/v1/knowledge-bases
   - 配置错误处理中间件
 
 ### 🗄️ 数据库设计和实现
-- [ ] **创建SQLite数据库表结构**
+- [x] **创建SQLite数据库表结构**
   - Users表：id, username, email, password_hash, created_at
   - KnowledgeBases表：id, user_id, name, source_url, branch, status, progress, created_at
   - DirectoryStructures表：id, knowledge_base_id, parent_id, name, type, path
   - FileAnalyses表：id, directory_structure_id, analysis, language, status
 
 ### 🔐 用户认证系统
-- [ ] **实现用户认证API**
+- [x] **实现用户认证API**
   - POST /api/v1/auth/register - 用户注册（用户名、邮箱、密码）
   - POST /api/v1/auth/login - 用户登录，返回JWT token
   - GET /api/v1/auth/me - 获取当前用户信息
   - 创建JWT验证中间件
 
 ### 🎨 基础前端页面
-- [ ] **创建前端页面结构**
+- [x] **创建前端页面结构**
   - 登录/注册页面（public/auth.html）
   - 知识库列表页面（public/dashboard.html）
   - 引入Tailwind CSS和基础JavaScript

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TinyCodeRAG - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-gray-900">TinyCodeRAG</h1>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span id="userEmail" class="text-sm text-gray-600"></span>
+                    <button onclick="logout()" class="text-sm text-gray-500 hover:text-gray-700">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+        <div class="px-4 py-6 sm:px-0">
+            <!-- Header -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-gray-900">My Knowledge Bases</h2>
+                <p class="mt-1 text-sm text-gray-600">Manage your code repositories and AI analyses</p>
+            </div>
+
+            <!-- Create Knowledge Base Button -->
+            <div class="mb-6">
+                <button onclick="showCreateModal()" 
+                        class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    Create Knowledge Base
+                </button>
+            </div>
+
+            <!-- Knowledge Bases List -->
+            <div id="knowledgeBasesList" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Knowledge base cards will be inserted here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="text-center py-12 hidden">
+                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+                <h3 class="mt-2 text-sm font-medium text-gray-900">No knowledge bases</h3>
+                <p class="mt-1 text-sm text-gray-500">Get started by creating your first knowledge base.</p>
+                <div class="mt-6">
+                    <button onclick="showCreateModal()" 
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        Create Knowledge Base
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Modal -->
+    <div id="createModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3">
+                <h3 class="text-lg font-medium text-gray-900 mb-4">Create Knowledge Base</h3>
+                <form onsubmit="createKnowledgeBase(event)">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="kbName" required 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Git Repository URL</label>
+                        <input type="url" id="kbUrl" required 
+                               placeholder="https://github.com/user/repo.git"
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium text-gray-700">Branch (optional)</label>
+                        <input type="text" id="kbBranch" value="main" 
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div class="flex justify-end space-x-3">
+                        <button type="button" onclick="hideCreateModal()" 
+                                class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300">
+                            Cancel
+                        </button>
+                        <button type="submit" 
+                                class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700">
+                            Create
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Toast -->
+    <div id="messageToast" class="fixed top-4 right-4 hidden">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-lg p-4 max-w-sm">
+            <div class="flex items-center">
+                <div id="messageIcon"></div>
+                <div class="ml-3">
+                    <p id="messageText" class="text-sm font-medium text-gray-900"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/v1';
+
+        // Check authentication
+        function checkAuth() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (!token || !user) {
+                window.location.href = '/auth.html';
+                return;
+            }
+
+            const userData = JSON.parse(user);
+            document.getElementById('userEmail').textContent = userData.email;
+            
+            loadKnowledgeBases();
+        }
+
+        // Load knowledge bases
+        async function loadKnowledgeBases() {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_BASE}/knowledge-bases`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (response.ok) {
+                    const knowledgeBases = await response.json();
+                    renderKnowledgeBases(knowledgeBases);
+                } else if (response.status === 401) {
+                    logout();
+                } else {
+                    showMessage('Failed to load knowledge bases', 'error');
+                }
+            } catch (error) {
+                showMessage('Network error. Please try again.', 'error');
+            }
+        }
+
+        // Render knowledge bases
+        function renderKnowledgeBases(knowledgeBases) {
+            const container = document.getElementById('knowledgeBasesList');
+            const emptyState = document.getElementById('emptyState');
+
+            if (knowledgeBases.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            container.innerHTML = knowledgeBases.map(kb => `
+                <div class="bg-white overflow-hidden shadow rounded-lg">
+                    <div class="px-4 py-5 sm:p-6">
+                        <h3 class="text-lg font-medium text-gray-900">${kb.name}</h3>
+                        <p class="mt-1 text-sm text-gray-500 truncate">${kb.source_url}</p>
+                        <div class="mt-4">
+                            <div class="flex items-center justify-between">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(kb.status)}">
+                                    ${kb.status}
+                                </span>
+                                <span class="text-sm text-gray-500">${kb.progress}%</span>
+                            </div>
+                            <div class="mt-2 w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: ${kb.progress}%"></div>
+                            </div>
+                        </div>
+                        <div class="mt-4 flex space-x-2">
+                            <button onclick="viewKnowledgeBase(${kb.id})" 
+                                    class="flex-1 bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm hover:bg-gray-200">
+                                View
+                            </button>
+                            <button onclick="deleteKnowledgeBase(${kb.id})" 
+                                    class="flex-1 bg-red-100 text-red-700 px-3 py-1 rounded text-sm hover:bg-red-200">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getStatusColor(status) {
+            switch (status) {
+                case 'completed': return 'bg-green-100 text-green-800';
+                case 'failed': return 'bg-red-100 text-red-800';
+                case 'analyzing': case 'scanning': case 'cloning': return 'bg-blue-100 text-blue-800';
+                default: return 'bg-gray-100 text-gray-800';
+            }
+        }
+
+        // Modal functions
+        function showCreateModal() {
+            document.getElementById('createModal').classList.remove('hidden');
+        }
+
+        function hideCreateModal() {
+            document.getElementById('createModal').classList.add('hidden');
+            document.getElementById('kbName').value = '';
+            document.getElementById('kbUrl').value = '';
+            document.getElementById('kbBranch').value = 'main';
+        }
+
+        // Create knowledge base
+        async function createKnowledgeBase(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('kbName').value;
+            const source_url = document.getElementById('kbUrl').value;
+            const branch = document.getElementById('kbBranch').value;
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_BASE}/knowledge-bases`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ name, source_url, branch })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    hideCreateModal();
+                    showMessage('Knowledge base created successfully!', 'success');
+                    loadKnowledgeBases();
+                } else {
+                    showMessage(data.error || 'Failed to create knowledge base', 'error');
+                }
+            } catch (error) {
+                showMessage('Network error. Please try again.', 'error');
+            }
+        }
+
+        // Placeholder functions
+        function viewKnowledgeBase(id) {
+            showMessage('Knowledge base viewer coming soon!', 'info');
+        }
+
+        function deleteKnowledgeBase(id) {
+            showMessage('Delete functionality coming soon!', 'info');
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = '/auth.html';
+        }
+
+        function showMessage(message, type) {
+            const toast = document.getElementById('messageToast');
+            const icon = document.getElementById('messageIcon');
+            const text = document.getElementById('messageText');
+
+            text.textContent = message;
+            
+            if (type === 'success') {
+                icon.innerHTML = '<svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+            } else if (type === 'error') {
+                icon.innerHTML = '<svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
+            } else {
+                icon.innerHTML = '<svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>';
+            }
+
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Initialize
+        window.onload = checkAuth;
+    </script>
+</body>
+</html>
