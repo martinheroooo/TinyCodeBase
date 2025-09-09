@@ -1,17 +1,13 @@
 from langgraph.graph import StateGraph, START, END
 from typing_extensions import TypedDict
-from typing import Annotated, Callable, Any, Dict
+from typing import Annotated
 from langgraph.graph.message import add_messages
 from langchain_openai import ChatOpenAI
-from langgraph.prebuilt import ToolNode,tools_condition
-from aihubmix_embedding import AIHubMixEmbedding
+from langgraph.prebuilt import ToolNode, tools_condition
 from config import AgentConfig
-from tools import Tools
 from langgraph.checkpoint.memory import InMemorySaver
-import sqlite3
-from langgraph.checkpoint.sqlite import SqliteSaver
-from langgraph.store.memory import InMemoryStore
 from langgraph.types import Command, interrupt
+from tavily import TavilyClient
 
 
 
@@ -37,12 +33,43 @@ if __name__ == "__main__":
         openai_api_base=main_agent_config.openai_base_url,
     )
 
-    def human_assistance(query: str) -> str:
-        """Request assistance from a human."""
-        human_response = interrupt({"query": query})
-        return human_response["data"]
+    def search_with_confirmation(query: str) -> str:
+        """
+        使用 Tavily 搜索，但需要人类确认才能执行搜索。
+        类似于 Claude Code 中执行 Shell 命令前的确认机制。
+        """
+        # 请求人类确认是否执行搜索
+        confirmation = interrupt({
+            "type": "search_confirmation",
+            "query": query,
+            "message": f"🔍 AI 想要搜索: '{query}'\n\n是否允许执行这次搜索？"
+        })
+        
+        if not confirmation.get("approved", False):
+            return "搜索被用户取消。"
+        
+        try:
+            # 初始化 Tavily 客户端
+            # 注意：需要设置 TAVILY_API_KEY 环境变量
+            tavily = TavilyClient(api_key="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")
+            
+            # 执行搜索
+            search_result = tavily.search(query, max_results=3)
+            
+            # 格式化搜索结果
+            formatted_results = []
+            for result in search_result.get("results", []):
+                formatted_results.append(f"标题: {result.get('title', 'N/A')}")
+                formatted_results.append(f"链接: {result.get('url', 'N/A')}")
+                formatted_results.append(f"摘要: {result.get('content', 'N/A')[:200]}...")
+                formatted_results.append("-" * 50)
+            
+            return "搜索结果：\n\n" + "\n".join(formatted_results)
+            
+        except Exception as e:
+            return f"搜索时发生错误: {str(e)}"
 
-    tools = [human_assistance]
+    tools = [search_with_confirmation]
     llm_with_tools = llm.bind_tools(tools)
 
     def chat_node(state: State):
@@ -64,26 +91,89 @@ if __name__ == "__main__":
     graph.add_edge("chat", END)
 
     app = graph.compile(checkpointer=memory)
-    user_input = "I need some expert guidance for building an AI agent. Could you request assistance for me?"
-    config = {"configurable": {"thread_id": "1"}}
+    
+    # 用户询问需要搜索的问题
+    user_input = "北京明天的天气如何？"
+    config = {"configurable": {"thread_id": "search_demo"}}
+    
+    print("🤖 用户: ", user_input)
+    print("\n" + "="*60)
+    print("第一阶段：AI 分析用户请求并准备搜索...")
+    print("="*60)
 
-    events = app.stream(
+    # 第一次执行：AI 会分析用户请求并准备调用搜索工具
+    events = list(app.stream(
         {"messages": [{"role": "user", "content": user_input}]},
         config,
         stream_mode="values",
-    )
+    ))
+    
     for event in events:
         if "messages" in event:
-            event["messages"][-1].pretty_print()
+            latest_message = event["messages"][-1]
+            if hasattr(latest_message, 'content') and latest_message.content:
+                print(f"🤖 AI: {latest_message.content}")
+            if hasattr(latest_message, 'tool_calls') and latest_message.tool_calls:
+                print(f"🔧 AI 准备调用工具: {latest_message.tool_calls}")
 
-    human_response = (
-        "We, the experts are here to help! We'd recommend you check out LangGraph to build your agent."
-        " It's much more reliable and extensible than simple autonomous agents."
-    )
+    print("\n" + "="*60)
+    print("第二阶段：等待用户确认搜索...")
+    print("="*60)
 
-    human_command = Command(resume={"data": human_response})
+    # 检查是否有搜索请求需要确认
+    search_query = None
+    for event in events:
+        if "messages" in event:
+            latest_message = event["messages"][-1]
+            if hasattr(latest_message, 'tool_calls') and latest_message.tool_calls:
+                # 从工具调用中提取搜索查询
+                search_query = latest_message.tool_calls[0]['args']['query']
+                break
 
+    if search_query:
+        print(f"🔍 AI 想要搜索: '{search_query}'")
+        print("是否允许执行这次搜索？")
+
+        # 等待用户真实输入
+        while True:
+            user_input_confirm = input("请输入 (y/n 或 是/否): ").strip().lower()
+            if user_input_confirm in ['y', 'yes', '是', '同意']:
+                approved = True
+                print("✅ 用户批准了搜索")
+                break
+            elif user_input_confirm in ['n', 'no', '否', '拒绝']:
+                approved = False
+                print("❌ 用户拒绝了搜索")
+                break
+            else:
+                print("请输入有效选项: y/n 或 是/否")
+        
+        human_approval = {"approved": approved}
+    else:
+        print("ℹ️ 没有需要确认的搜索请求")
+        human_approval = {"approved": True}
+    
+    human_command = Command(resume=human_approval)
+
+    print("\n" + "="*60)
+    if search_query and human_approval.get("approved", False):
+        print("第三阶段：执行搜索并返回结果...")
+    elif search_query:
+        print("第三阶段：处理用户拒绝的搜索请求...")
+    else:
+        print("第三阶段：处理用户请求...")
+    print("="*60)
+
+    # 第二次执行：从中断点恢复，执行搜索
     events = app.stream(human_command, config, stream_mode="values")
     for event in events:
         if "messages" in event:
-            event["messages"][-1].pretty_print()
+            latest_message = event["messages"][-1]
+            if hasattr(latest_message, 'content') and latest_message.content:
+                print(f"🤖 AI: {latest_message.content}")
+
+    print("\n" + "="*60)
+    print("演示完成！")
+    print("="*60)
+    print("💡 这个例子展示了如何在 AI 调用工具前获得人类确认，")
+    print("   就像 Claude Code 中执行 Shell 命令前的确认机制一样。")
