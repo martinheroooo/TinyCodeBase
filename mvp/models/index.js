@@ -1,4 +1,4 @@
-const { Sequelize } = require('sequelize');
+const { Sequelize, Op } = require('sequelize');
 const path = require('path');
 
 const sequelize = new Sequelize({
@@ -27,5 +27,6 @@ module.exports = {
   User,
   KnowledgeBase,
   DirectoryStructure,
-  FileAnalysis
+  FileAnalysis,
+  Op
 };

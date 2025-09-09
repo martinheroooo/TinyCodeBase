@@ -223,9 +223,33 @@
         async function createKnowledgeBase(event) {
             event.preventDefault();
             
-            const name = document.getElementById('kbName').value;
-            const source_url = document.getElementById('kbUrl').value;
-            const branch = document.getElementById('kbBranch').value;
+            const name = document.getElementById('kbName').value.trim();
+            const source_url = document.getElementById('kbUrl').value.trim();
+            const branch = document.getElementById('kbBranch').value.trim();
+
+            // Validation
+            if (!name) {
+                showMessage('Please enter a knowledge base name', 'error');
+                return;
+            }
+
+            if (!source_url) {
+                showMessage('Please enter a Git repository URL', 'error');
+                return;
+            }
+
+            // Git URL validation
+            const gitUrlRegex = /^https:\/\/(github\.com|gitlab\.com|bitbucket\.org)\/[^\/]+\/[^\/]+(\.git)?$/;
+            if (!gitUrlRegex.test(source_url)) {
+                showMessage('Please enter a valid Git URL (GitHub, GitLab, or Bitbucket)', 'error');
+                return;
+            }
+
+            // Show loading state
+            const submitButton = event.target.querySelector('button[type="submit"]');
+            const originalText = submitButton.textContent;
+            submitButton.textContent = 'Creating...';
+            submitButton.disabled = true;
 
             try {
                 const token = localStorage.getItem('token');
@@ -235,20 +259,24 @@
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({ name, source_url, branch })
+                    body: JSON.stringify({ name, source_url, branch: branch || 'main' })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
                     hideCreateModal();
-                    showMessage('Knowledge base created successfully!', 'success');
+                    showMessage('Knowledge base creation started! It may take a few minutes to complete.', 'success');
                     loadKnowledgeBases();
                 } else {
                     showMessage(data.error || 'Failed to create knowledge base', 'error');
                 }
             } catch (error) {
-                showMessage('Network error. Please try again.', 'error');
+                showMessage('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                // Restore button state
+                submitButton.textContent = originalText;
+                submitButton.disabled = false;
             }
         }
 
@@ -305,21 +333,43 @@
             const toast = document.getElementById('messageToast');
             const icon = document.getElementById('messageIcon');
             const text = document.getElementById('messageText');
+            const toastContainer = toast.querySelector('div');
 
+            // Clear previous classes
+            toastContainer.className = 'bg-white border rounded-lg shadow-lg p-4 max-w-sm';
+            
             text.textContent = message;
             
             if (type === 'success') {
                 icon.innerHTML = '<svg class="h-5 w-5 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>';
+                toastContainer.classList.add('border-green-200');
             } else if (type === 'error') {
                 icon.innerHTML = '<svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
+                toastContainer.classList.add('border-red-200');
             } else {
                 icon.innerHTML = '<svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>';
+                toastContainer.classList.add('border-blue-200');
             }
 
+            // Show toast with animation
             toast.classList.remove('hidden');
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            
             setTimeout(() => {
-                toast.classList.add('hidden');
-            }, 3000);
+                toast.style.transition = 'all 0.3s ease';
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(0)';
+            }, 10);
+
+            // Auto hide after 4 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, 4000);
         }
 
         // Initialize

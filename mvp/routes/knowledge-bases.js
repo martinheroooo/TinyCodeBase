@@ -138,6 +138,23 @@ router.get('/:id/status', authenticateToken, async (req, res) => {
   }
 });
 
+// Export knowledge base documentation
+router.get('/:id/export', authenticateToken, async (req, res) => {
+  try {
+    const documentation = await knowledgeBaseService.exportDocumentation(
+      req.params.id,
+      req.user.id
+    );
+    
+    res.json({
+      documentation: documentation
+    });
+  } catch (error) {
+    console.error('Error exporting documentation:', error);
+    res.status(500).json({ error: error.message || 'Internal server error' });
+  }
+});
+
 // Delete knowledge base
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {

@@ -1,7 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User } = require('../models');
+const { Sequelize, User, Op } = require('../models');
 const authenticateToken = require('../middleware/auth');
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
 
     const existingUser = await User.findOne({
       where: {
-        $or: [{ email }, { username }]
+        [Op.or]: [{ email }, { username }]
       }
     });
 
