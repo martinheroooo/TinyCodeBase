@@ -2,15 +2,30 @@ const OpenAI = require('openai');
 
 class AIService {
   constructor() {
+    const apiKey = process.env.OPENAI_API_KEY;
+    const apiEndpoint = process.env.OPENAI_API_ENDPOINT || 'https://api.openai.com/v1';
+    
     this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+      apiKey: apiKey,
+      baseURL: apiEndpoint
     });
+    
+    console.log(`AI Service initialized with endpoint: ${apiEndpoint}`);
   }
 
   async analyzeCode(fileName, fileContent, language) {
     if (!fileContent || fileContent.length === 0) {
       return {
         analysis: 'File is empty or could not be read.',
+        language: language || 'Unknown'
+      };
+    }
+
+    // Check if OpenAI API key is configured
+    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your-openai-api-key-here') {
+      console.log(`OpenAI API key not configured for endpoint ${process.env.OPENAI_API_ENDPOINT}, using fallback analysis`);
+      return {
+        analysis: this.generateFallbackAnalysis(fileName, fileContent, language),
         language: language || 'Unknown'
       };
     }
@@ -41,7 +56,7 @@ class AIService {
         language: language || 'Unknown'
       };
     } catch (error) {
-      console.error('Error analyzing code with OpenAI:', error);
+      console.error(`Error analyzing code with ${process.env.OPENAI_API_ENDPOINT}:`, error.message);
       
       // Fallback analysis if API fails
       return {

@@ -163,7 +163,7 @@ class KnowledgeBaseService {
   async getUserKnowledgeBases(userId) {
     return await KnowledgeBase.findAll({
       where: { user_id: userId },
-      order: [['created_at', 'DESC']]
+      order: [['createdAt', 'DESC']]
     });
   }
 

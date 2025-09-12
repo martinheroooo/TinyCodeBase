@@ -40,10 +40,22 @@ class GitService {
       console.log(`Cloning ${url} to ${targetPath}`);
       
       const git = simpleGit();
-      await git.clone(url, targetPath, ['--branch', branch]);
+      
+      // Try to clone with specified branch first
+      try {
+        await git.clone(url, targetPath, ['--branch', branch]);
+      } catch (cloneError) {
+        // If main branch fails, try master branch
+        if (branch === 'main') {
+          console.log(`Branch 'main' not found, trying 'master' branch`);
+          await git.clone(url, targetPath, ['--branch', 'master']);
+        } else {
+          throw cloneError;
+        }
+      }
       
       // Switch to specific branch if different from default
-      if (branch !== 'main') {
+      if (branch !== 'main' && branch !== 'master') {
         const repoGit = simpleGit(targetPath);
         await repoGit.checkout(branch);
       }
