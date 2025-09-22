@@ -1,6 +1,7 @@
 const GitService = require('./GitService');
 const DirectoryScanner = require('./DirectoryScanner');
 const AIService = require('./AIService');
+const logger = require('./Logger');
 const { sequelize, KnowledgeBase, DirectoryStructure, FileAnalysis } = require('../models');
 
 class KnowledgeBaseService {
@@ -26,9 +27,20 @@ class KnowledgeBaseService {
 
       await transaction.commit();
       
+      // Log knowledge base creation
+      await logger.logKnowledgeBaseOperation('create', knowledgeBase.id, userId, {
+        name,
+        sourceUrl,
+        branch
+      });
+      
       // Start async processing
       this.processKnowledgeBase(knowledgeBase.id).catch(error => {
         console.error(`Error processing knowledge base ${knowledgeBase.id}:`, error);
+        logger.error(`Knowledge base processing failed`, { 
+          knowledgeBaseId: knowledgeBase.id, 
+          error: error.message 
+        });
         this.updateKnowledgeBaseStatus(knowledgeBase.id, 'failed', 0);
       });
       
@@ -75,8 +87,14 @@ class KnowledgeBaseService {
       await this.gitService.cleanup(repoPath);
       
       console.log(`Knowledge base ${knowledgeBaseId} processed successfully`);
+      await logger.logKnowledgeBaseOperation('process_complete', knowledgeBaseId, null, {
+        totalFiles: structure.length
+      });
     } catch (error) {
       console.error(`Error processing knowledge base ${knowledgeBaseId}:`, error);
+      await logger.logKnowledgeBaseOperation('process_failed', knowledgeBaseId, null, {
+        error: error.message
+      });
       await this.updateKnowledgeBaseStatus(knowledgeBaseId, 'failed', 0);
       throw error;
     }
@@ -312,6 +330,40 @@ class KnowledgeBaseService {
       
       return output;
     }).join('');
+  }
+
+  async queryKnowledgeBase(knowledgeBaseId, userId, question) {
+    const knowledgeBase = await this.getKnowledgeBaseById(knowledgeBaseId, userId);
+    if (!knowledgeBase) {
+      throw new Error('Knowledge base not found');
+    }
+
+    if (knowledgeBase.status !== 'completed') {
+      throw new Error('Knowledge base is still being processed. Please wait until analysis is complete.');
+    }
+
+    // Get knowledge base structure with file analyses
+    const structure = await this.getKnowledgeBaseStructure(knowledgeBaseId, userId);
+    
+    // Search for relevant files
+    const relevantFiles = await this.aiService.searchRelevantFiles(knowledgeBaseId, question, structure);
+    
+    // Generate RAG response
+    const response = await this.aiService.ragQuery(knowledgeBase, question, relevantFiles);
+    
+    // Log the RAG query
+    await logger.logKnowledgeBaseOperation('rag_query', knowledgeBaseId, userId, {
+      question,
+      relevantFilesCount: relevantFiles.length,
+      sourcesCount: response.sources.length
+    });
+    
+    return {
+      answer: response.answer,
+      sources: response.sources,
+      question: question,
+      timestamp: new Date().toISOString()
+    };
   }
 }
 

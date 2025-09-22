@@ -5,6 +5,7 @@ const path = require('path');
 require('dotenv').config();
 
 const initializeDatabase = require('./config/database');
+const logger = require('./services/Logger');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,19 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+// Request logging middleware
+app.use(async (req, res, next) => {
+  const startTime = Date.now();
+  
+  // Log when response finishes
+  res.on('finish', async () => {
+    const duration = Date.now() - startTime;
+    await logger.logRequest(req, res, duration);
+  });
+  
+  next();
+});
 
 // Serve auth.html as default
 app.get('/', (req, res) => {

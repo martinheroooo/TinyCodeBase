@@ -1,4 +1,5 @@
 const OpenAI = require('openai');
+const logger = require('./Logger');
 
 class AIService {
   constructor() {
@@ -57,6 +58,11 @@ class AIService {
       };
     } catch (error) {
       console.error(`Error analyzing code with ${process.env.OPENAI_API_ENDPOINT}:`, error.message);
+      await logger.logAIOperation('analyzeCode', false, { 
+        fileName, 
+        error: error.message,
+        endpoint: process.env.OPENAI_API_ENDPOINT 
+      });
       
       // Fallback analysis if API fails
       return {
@@ -152,6 +158,122 @@ Keep your response under 200 words and focus on the most important aspects.`;
 
   delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async ragQuery(knowledgeBase, question, relevantFiles = []) {
+    if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'your-openai-api-key-here') {
+      return {
+        answer: 'AI service is not configured. Please set up your OpenAI API key to enable AI-powered responses.',
+        sources: []
+      };
+    }
+
+    // Prepare context from relevant files
+    let context = 'Repository Information:\n';
+    context += `- Name: ${knowledgeBase.name}\n`;
+    context += `- Source: ${knowledgeBase.source_url}\n`;
+    context += `- Branch: ${knowledgeBase.branch}\n\n`;
+
+    if (relevantFiles.length > 0) {
+      context += 'Relevant Files:\n\n';
+      relevantFiles.forEach((file, index) => {
+        context += `File ${index + 1}: ${file.path}\n`;
+        context += `Language: ${file.language || 'Unknown'}\n`;
+        context += `Analysis: ${file.analysis}\n\n`;
+      });
+    }
+
+    const prompt = `Based on the following repository information and file analyses, please answer the user's question.
+
+${context}
+
+User Question: ${question}
+
+Instructions:
+1. Provide a comprehensive answer based on the available repository information
+2. If the information is not sufficient to answer the question, acknowledge this limitation
+3. Be specific and reference relevant files when possible
+4. Keep your response focused on the repository content and structure
+5. If asking about implementation details, mention what information is available in the analysis
+
+Answer:`;
+
+    try {
+      const response = await this.openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are an AI assistant helping users understand code repositories. Use the provided file analyses and repository information to answer questions accurately and helpfully.'
+          },
+          {
+            role: 'user',
+            content: prompt
+          }
+        ],
+        max_tokens: 500,
+        temperature: 0.3
+      });
+
+      const answer = response.choices[0]?.message?.content || 'Unable to generate response.';
+      
+      return {
+        answer: answer.trim(),
+        sources: relevantFiles.map(file => ({
+          path: file.path,
+          language: file.language
+        }))
+      };
+    } catch (error) {
+      console.error('Error in RAG query:', error);
+      await logger.logAIOperation('ragQuery', false, { 
+        question, 
+        error: error.message,
+        knowledgeBase: knowledgeBase.name 
+      });
+      return {
+        answer: 'Sorry, I encountered an error while processing your question. Please try again later.',
+        sources: []
+      };
+    }
+  }
+
+  async searchRelevantFiles(knowledgeBaseId, question, structure) {
+    // Simple keyword matching for relevant files
+    const questionWords = question.toLowerCase().split(/\s+/);
+    const relevantFiles = [];
+
+    structure.forEach(item => {
+      if (item.type === 'file' && item.FileAnalysis) {
+        let relevanceScore = 0;
+        
+        // Check if question words appear in file path or analysis
+        const textToSearch = `${item.path} ${item.FileAnalysis.analysis}`.toLowerCase();
+        
+        questionWords.forEach(word => {
+          if (word.length > 2 && textToSearch.includes(word)) {
+            relevanceScore++;
+          }
+        });
+
+        if (relevanceScore > 0) {
+          relevantFiles.push({
+            ...item.toJSON(),
+            relevanceScore
+          });
+        }
+      }
+    });
+
+    // Sort by relevance and return top matches
+    return relevantFiles
+      .sort((a, b) => b.relevanceScore - a.relevanceScore)
+      .slice(0, 5)
+      .map(item => ({
+        path: item.path,
+        language: item.FileAnalysis.language,
+        analysis: item.FileAnalysis.analysis
+      }));
   }
 }
 

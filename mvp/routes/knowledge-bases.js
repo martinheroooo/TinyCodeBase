@@ -155,6 +155,41 @@ router.get('/:id/export', authenticateToken, async (req, res) => {
   }
 });
 
+// Query knowledge base (RAG)
+router.post('/:id/query', authenticateToken, async (req, res) => {
+  try {
+    const { question } = req.body;
+    
+    if (!question) {
+      return res.status(400).json({ error: 'Question is required' });
+    }
+    
+    if (question.length > 500) {
+      return res.status(400).json({ error: 'Question is too long. Maximum 500 characters.' });
+    }
+    
+    const response = await knowledgeBaseService.queryKnowledgeBase(
+      req.params.id,
+      req.user.id,
+      question
+    );
+    
+    res.json(response);
+  } catch (error) {
+    console.error('Error querying knowledge base:', error);
+    
+    if (error.message === 'Knowledge base not found') {
+      return res.status(404).json({ error: error.message });
+    }
+    
+    if (error.message.includes('still being processed')) {
+      return res.status(400).json({ error: error.message });
+    }
+    
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 // Delete knowledge base
 router.delete('/:id', authenticateToken, async (req, res) => {
   try {

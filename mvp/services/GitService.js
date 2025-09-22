@@ -1,6 +1,7 @@
 const simpleGit = require('simple-git');
 const path = require('path');
 const fs = require('fs').promises;
+const logger = require('./Logger');
 
 class GitService {
   constructor() {
@@ -23,7 +24,7 @@ class GitService {
 
   async cloneRepository(url, branch = 'main') {
     if (!this.validateGitUrl(url)) {
-      throw new Error('Invalid Git URL. Only GitHub, GitLab, and Bitbucket URLs are supported.');
+      throw new Error('Invalid Git URL format. Please provide a valid GitHub, GitLab, or Bitbucket repository URL.');
     }
 
     const repoName = this.extractRepoName(url);
@@ -37,34 +38,82 @@ class GitService {
     }
 
     try {
-      console.log(`Cloning ${url} to ${targetPath}`);
+      console.log(`Cloning ${url} (branch: ${branch}) to ${targetPath}`);
       
       const git = simpleGit();
+      let clonedBranch = null;
       
       // Try to clone with specified branch first
       try {
-        await git.clone(url, targetPath, ['--branch', branch]);
+        await git.clone(url, targetPath, ['--branch', branch, '--depth', '1']);
+        clonedBranch = branch;
+        console.log(`Successfully cloned branch '${branch}'`);
       } catch (cloneError) {
+        console.log(`Failed to clone branch '${branch}': ${cloneError.message}`);
+        
         // If main branch fails, try master branch
         if (branch === 'main') {
-          console.log(`Branch 'main' not found, trying 'master' branch`);
-          await git.clone(url, targetPath, ['--branch', 'master']);
+          try {
+            console.log(`Attempting to clone 'master' branch instead...`);
+            await git.clone(url, targetPath, ['--branch', 'master', '--depth', '1']);
+            clonedBranch = 'master';
+            console.log(`Successfully cloned branch 'master'`);
+          } catch (masterError) {
+            throw new Error(`Failed to clone repository. Neither 'main' nor 'master' branch is accessible. Please check if the repository exists and is public.`);
+          }
+        } else if (branch === 'master') {
+          try {
+            console.log(`Attempting to clone 'main' branch instead...`);
+            await git.clone(url, targetPath, ['--branch', 'main', '--depth', '1']);
+            clonedBranch = 'main';
+            console.log(`Successfully cloned branch 'main'`);
+          } catch (mainError) {
+            throw new Error(`Failed to clone branch '${branch}'. Please check if the branch exists in the repository.`);
+          }
         } else {
-          throw cloneError;
+          throw new Error(`Failed to clone branch '${branch}'. Please check if the branch exists in the repository.`);
         }
       }
       
       // Switch to specific branch if different from default
-      if (branch !== 'main' && branch !== 'master') {
-        const repoGit = simpleGit(targetPath);
-        await repoGit.checkout(branch);
+      if (branch !== 'main' && branch !== 'master' && clonedBranch !== branch) {
+        try {
+          const repoGit = simpleGit(targetPath);
+          await repoGit.checkout(branch);
+          console.log(`Switched to branch '${branch}'`);
+        } catch (checkoutError) {
+          throw new Error(`Cloned branch '${clonedBranch}' but failed to switch to '${branch}'. The branch may not exist.`);
+        }
       }
 
-      console.log(`Repository cloned successfully to ${targetPath}`);
+      // Verify the clone was successful
+      const repoGit = simpleGit(targetPath);
+      const status = await repoGit.status();
+      console.log(`Repository cloned successfully. Current branch: ${status.current}`);
+      await logger.logGitOperation('clone', url, true);
+      
       return targetPath;
     } catch (error) {
       console.error('Error cloning repository:', error);
-      throw new Error(`Failed to clone repository: ${error.message}`);
+      
+      // Clean up on failure
+      try {
+        await fs.rm(targetPath, { recursive: true, force: true });
+      } catch (cleanupError) {
+        console.error('Error cleaning up failed clone:', cleanupError);
+      }
+      
+      // Provide more helpful error messages
+      if (error.message.includes('404')) {
+        throw new Error('Repository not found. Please check if the URL is correct and the repository exists.');
+      } else if (error.message.includes('403') || error.message.includes('401')) {
+        throw new Error('Access denied. Please ensure the repository is public or you have the necessary permissions.');
+      } else if (error.message.includes('resolve')) {
+        throw new Error('Could not resolve the repository URL. Please check your internet connection and the URL.');
+      } else {
+        await logger.logGitOperation('clone', url, false, error);
+        throw error;
+      }
     }
   }
 
