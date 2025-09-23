@@ -129,6 +129,10 @@
             loadKnowledgeBases();
         }
 
+        // Global polling state
+        let pollingInterval = null;
+        let hasProcessingKbs = false;
+
         // Load knowledge bases
         async function loadKnowledgeBases() {
             try {
@@ -140,15 +144,38 @@
                 });
 
                 if (response.ok) {
-                    const knowledgeBases = await response.json();
+                    const data = await response.json();
+                    const knowledgeBases = data.knowledge_bases || [];
                     renderKnowledgeBases(knowledgeBases);
+                    
+                    // Check if there are any processing knowledge bases
+                    const wasProcessing = hasProcessingKbs;
+                    hasProcessingKbs = knowledgeBases.some(kb => ['pending', 'cloning', 'scanning', 'analyzing'].includes(kb.status));
+                    
+                    // Start polling if there are processing KBs
+                    if (hasProcessingKbs && !pollingInterval) {
+                        startProgressPolling();
+                    } else if (!hasProcessingKbs && pollingInterval) {
+                        stopProgressPolling();
+                    }
+                    
+                    // If we just finished processing, show a notification
+                    if (wasProcessing && !hasProcessingKbs) {
+                        checkForCompletedKbs(knowledgeBases);
+                    }
                 } else if (response.status === 401) {
                     logout();
                 } else {
-                    showMessage('Failed to load knowledge bases', 'error');
+                    const errorData = await response.json().catch(() => ({}));
+                    showMessage(errorData.error || 'Failed to load knowledge bases', 'error');
                 }
             } catch (error) {
-                showMessage('Network error. Please try again.', 'error');
+                console.error('Network error:', error);
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    showMessage('Network connection error. Please check your internet connection.', 'error');
+                } else {
+                    showMessage('Failed to load knowledge bases. Please try again.', 'error');
+                }
             }
         }
 
@@ -266,13 +293,31 @@
 
                 if (response.ok) {
                     hideCreateModal();
-                    showMessage('Knowledge base creation started! It may take a few minutes to complete.', 'success');
+                    showMessage('Knowledge base creation started! Processing may take a few minutes.', 'success');
+                    
+                    // Start polling immediately
+                    hasProcessingKbs = true;
+                    if (!pollingInterval) {
+                        startProgressPolling();
+                    }
+                    
+                    // Load knowledge bases to show the new one
                     loadKnowledgeBases();
                 } else {
-                    showMessage(data.error || 'Failed to create knowledge base', 'error');
+                    // Handle different error types
+                    if (response.status >= 500) {
+                        showMessage('Server error. Please try again later.', 'error');
+                    } else {
+                        showMessage(data.error || 'Failed to create knowledge base', 'error');
+                    }
                 }
             } catch (error) {
-                showMessage('Network error. Please check your connection and try again.', 'error');
+                console.error('Create knowledge base error:', error);
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    showMessage('Network connection error. Please check your internet connection.', 'error');
+                } else {
+                    showMessage('Failed to create knowledge base. Please try again.', 'error');
+                }
             } finally {
                 // Restore button state
                 submitButton.textContent = originalText;
@@ -304,23 +349,61 @@
                     showMessage('Knowledge base deleted successfully', 'success');
                     loadKnowledgeBases();
                 } else {
-                    const data = await response.json();
+                    const data = await response.json().catch(() => ({}));
                     showMessage(data.error || 'Failed to delete knowledge base', 'error');
                 }
             } catch (error) {
-                showMessage('Network error. Please try again.', 'error');
+                console.error('Delete knowledge base error:', error);
+                if (error.name === 'TypeError' && error.message.includes('Failed to fetch')) {
+                    showMessage('Network connection error. Please check your internet connection.', 'error');
+                } else {
+                    showMessage('Failed to delete knowledge base. Please try again.', 'error');
+                }
             }
         }
 
         // Start progress polling for processing knowledge bases
         function startProgressPolling() {
+            // Clear any existing interval
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+            }
+            
             // Check for processing knowledge bases every 3 seconds
-            setInterval(async () => {
-                const processingCards = document.querySelectorAll('[data-processing="true"]');
-                if (processingCards.length > 0) {
-                    loadKnowledgeBases();
-                }
+            pollingInterval = setInterval(() => {
+                loadKnowledgeBases();
             }, 3000);
+        }
+
+        // Stop progress polling
+        function stopProgressPolling() {
+            if (pollingInterval) {
+                clearInterval(pollingInterval);
+                pollingInterval = null;
+            }
+        }
+
+        // Check for newly completed knowledge bases
+        function checkForCompletedKbs(knowledgeBases) {
+            const completedKbs = knowledgeBases.filter(kb => kb.status === 'completed' || kb.status === 'failed');
+            const recentlyCompleted = completedKbs.filter(kb => {
+                // Check if completed in the last 10 seconds
+                const completedTime = new Date(kb.updated_at || kb.created_at).getTime();
+                const now = Date.now();
+                return (now - completedTime) < 10000; // 10 seconds
+            });
+            
+            if (recentlyCompleted.length > 0) {
+                const successCount = recentlyCompleted.filter(kb => kb.status === 'completed').length;
+                const failedCount = recentlyCompleted.filter(kb => kb.status === 'failed').length;
+                
+                if (successCount > 0) {
+                    showMessage(`${successCount} knowledge base${successCount > 1 ? 's' : ''} processed successfully!`, 'success');
+                }
+                if (failedCount > 0) {
+                    showMessage(`${failedCount} knowledge base${failedCount > 1 ? 's' : ''} failed to process.`, 'error');
+                }
+            }
         }
 
         function logout() {
@@ -375,7 +458,7 @@
         // Initialize
         window.onload = function() {
             checkAuth();
-            startProgressPolling();
+            // Don't start polling immediately, wait for first loadKnowledgeBases call
         };
     </script>
 </body>

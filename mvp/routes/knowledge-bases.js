@@ -30,7 +30,8 @@ router.post('/', authenticateToken, async (req, res) => {
         branch: knowledgeBase.branch,
         status: knowledgeBase.status,
         progress: knowledgeBase.progress,
-        created_at: knowledgeBase.created_at
+        created_at: knowledgeBase.createdAt ? knowledgeBase.createdAt.toISOString() : null,
+        updated_at: knowledgeBase.updatedAt ? knowledgeBase.updatedAt.toISOString() : null
       }
     });
   } catch (error) {
@@ -52,7 +53,8 @@ router.get('/', authenticateToken, async (req, res) => {
         branch: kb.branch,
         status: kb.status,
         progress: kb.progress,
-        created_at: kb.created_at
+        created_at: kb.createdAt ? kb.createdAt.toISOString() : null,
+        updated_at: kb.updatedAt ? kb.updatedAt.toISOString() : null
       }))
     });
   } catch (error) {
