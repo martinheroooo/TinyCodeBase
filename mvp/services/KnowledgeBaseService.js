@@ -88,7 +88,7 @@ class KnowledgeBaseService {
       
       console.log(`Knowledge base ${knowledgeBaseId} processed successfully`);
       await logger.logKnowledgeBaseOperation('process_complete', knowledgeBaseId, null, {
-        totalFiles: structure.length
+        totalFiles: directoryStructure.length
       });
     } catch (error) {
       console.error(`Error processing knowledge base ${knowledgeBaseId}:`, error);
