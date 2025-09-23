@@ -6,7 +6,7 @@
 
 ## 📚 项目文章系列
 
-本仓库包含三篇深度技术文章，记录了从RAG到Agent的完整构建过程：
+本仓库包含四篇深度技术文章，记录了从RAG到Agent的完整构建过程：
 
 ### 1. [手把手构建TinyCodeRAG：轻量级代码知识库解决方案](https://codemls.com/articles/25-06-18-build-tiny-code-rag)
 - 📅 2025-06-18
@@ -26,6 +26,12 @@
 - 📈 从手写Agent到LangGraph框架的进化
 - 💾 涵盖基础聊天、工具调用、记忆管理等核心功能
 
+### 4. [Human-in-the-loop 如何拯救智能体的骚操作？](https://codemls.com/articles/25-09-08-human-in-the-loop)
+- 📅 2025-09-08
+- 🎯 **人类在环机制**
+- 🚦 详解智能体安全控制的关键技术
+- 🔧 基于LangGraph实现可控的智能体决策流程
+
 ## 🏗️ 项目结构
 
 ```
@@ -39,11 +45,12 @@ TinyCodeBase/
 │   ├── tiny_code_rag.py        # RAG系统整合
 │   └── test_*.py               # 各模块测试文件
 └── 🤖 agent/ - 智能体
-    ├── agent.py                # ReAct范式Agent
-    ├── agent_langgraph.py      # LangGraph框架Agent
-    ├── tools.py                # 工具函数集合
-    ├── tree_sitter_parser.py   # 代码解析器
-    └── test_agent.py           # Agent测试
+    ├── agent.py                           # ReAct范式Agent
+    ├── agent_langgraph.py                 # LangGraph框架Agent
+    ├── agent_langgraph_human_in_the_loop.py  # 人类在环Agent ⭐
+    ├── tools.py                           # 工具函数集合
+    ├── tree_sitter_parser.py              # 代码解析器
+    └── test_agent.py                      # Agent测试
 
 ```
 
@@ -66,6 +73,7 @@ TinyCodeBase/
 🔧 **工具集成**：简化的工具调用和条件分支  
 💾 **记忆系统**：短期记忆(Checkpointer)和长期记忆(Store)  
 🎨 **可视化**：自动生成Agent流程图  
+🚦 **人类在环**：关键决策节点的安全控制机制  
 
 ## 🚀 快速开始
 
@@ -85,8 +93,9 @@ python tiny_code_rag.py
 ### 3. 体验Agent系统
 ```bash
 cd agent
-python agent.py              # ReAct范式Agent
-python agent_langgraph.py    # LangGraph框架Agent
+python agent.py                           # ReAct范式Agent
+python agent_langgraph.py                 # LangGraph框架Agent
+python agent_langgraph_human_in_the_loop.py  # 人类在环Agent
 ```
 
 ## 🔗 相关链接
