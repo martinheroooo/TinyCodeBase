@@ -1,250 +1,250 @@
 ---
-description: "Task list template for feature implementation"
+description: "功能实现的任务列表模板"
 ---
 
-# Tasks: [FEATURE NAME]
+# 任务清单: [FEATURE NAME]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**输入**: 来自 `/specs/[###-feature-name]/` 的设计文档
+**前置条件**: plan.md（必需），spec.md（用户故事必需），research.md，data-model.md，contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**测试**: 以下示例包含测试任务。测试是可选的 - 仅在功能规格中明确要求时才包含。
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**组织方式**: 任务按用户故事分组，以实现每个故事的独立实现和测试。
 
-## Format: `[ID] [P?] [Story] Description`
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
+## 格式: `[ID] [P?] [故事] 描述`
+- **[P]**: 可以并行运行（不同文件，无依赖关系）
+- **[故事]**: 此任务属于哪个用户故事（例如：US1, US2, US3）
+- 描述中包含确切的文件路径
 
-## Path Conventions
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+## 路径约定
+- **单一项目**: 仓库根目录下的 `src/`, `tests/`
+- **网页应用**: `backend/src/`, `frontend/src/`
+- **移动端**: `api/src/`, `ios/src/` 或 `android/src/`
+- 下面显示的路径假设为单一项目 - 根据plan.md结构进行调整
 
-<!-- 
+<!--
   ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
-  
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
-  
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
-  
-  DO NOT keep these sample tasks in the generated tasks.md file.
+  重要提示: 以下任务仅为说明性示例任务。
+
+  /speckit.tasks 命令必须根据以下内容替换为实际任务:
+  - 来自spec.md的用户故事（及其优先级P1, P2, P3...）
+  - 来自plan.md的功能需求
+  - 来自data-model.md的实体
+  - 来自contracts/的端点
+
+  任务必须按用户故事组织，以便每个故事能够：
+  - 独立实现
+  - 独立测试
+  - 作为MVP增量交付
+
+  不要在生成的tasks.md文件中保留这些示例任务。
   ============================================================================
 -->
 
-## Phase 1: Setup (Shared Infrastructure)
+## 阶段1: 设置（共享基础设施）
 
-**Purpose**: Project initialization and basic structure
+**目的**: 项目初始化和基本结构
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
-
----
-
-## Phase 2: Foundational (Blocking Prerequisites)
-
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
-
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
-
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
-
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+- [ ] T001 根据实施计划创建项目结构
+- [ ] T002 使用[框架]依赖项初始化[语言]项目
+- [ ] T003 [P] 配置代码检查和格式化工具
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## 阶段2: 基础设施（阻塞前置条件）
 
-**Goal**: [Brief description of what this story delivers]
+**目的**: 在任何用户故事可以实施之前必须完成的核心基础设施
 
-**Independent Test**: [How to verify this story works on its own]
+**⚠️ 关键**: 在此阶段完成之前，无法开始任何用户故事工作
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+基础设施任务示例（根据您的项目调整）：
 
-**NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+- [ ] T004 设置数据库模式和迁移框架
+- [ ] T005 [P] 实现认证/授权框架
+- [ ] T006 [P] 设置API路由和中间件结构
+- [ ] T007 创建所有故事都依赖的基础模型/实体
+- [ ] T008 配置错误处理和日志记录基础设施
+- [ ] T009 设置环境配置管理
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
-
-**Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
+**检查点**: 基础设施就绪 - 用户故事实施现在可以并行开始
 
 ---
 
-## Phase 4: User Story 2 - [Title] (Priority: P2)
+## 阶段3: 用户故事1 - [标题] (优先级: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**目标**: [此故事交付内容的简要描述]
 
-**Independent Test**: [How to verify this story works on its own]
+**独立测试**: [如何验证此故事独立工作]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### 用户故事1测试（可选 - 仅在要求测试时）⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
+**注意：首先编写这些测试，确保在实施前失败**
 
-### Implementation for User Story 2
+- [ ] T010 [P] [US1] 在tests/contract/test_[name].py中的[端点]合同测试
+- [ ] T011 [P] [US1] 在tests/integration/test_[name].py中的[用户旅程]集成测试
 
-- [ ] T020 [P] [US2] Create [Entity] model in src/models/[entity].py
-- [ ] T021 [US2] Implement [Service] in src/services/[service].py
-- [ ] T022 [US2] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T023 [US2] Integrate with User Story 1 components (if needed)
+### 用户故事1实施
 
-**Checkpoint**: At this point, User Stories 1 AND 2 should both work independently
+- [ ] T012 [P] [US1] 在src/models/[entity1].py中创建[实体1]模型
+- [ ] T013 [P] [US1] 在src/models/[entity2].py中创建[实体2]模型
+- [ ] T014 [US1] 在src/services/[service].py中实现[服务]（依赖于T012, T013）
+- [ ] T015 [US1] 在src/[位置]/[文件].py中实现[端点/功能]
+- [ ] T016 [US1] 添加验证和错误处理
+- [ ] T017 [US1] 为用户故事1操作添加日志记录
 
----
-
-## Phase 5: User Story 3 - [Title] (Priority: P3)
-
-**Goal**: [Brief description of what this story delivers]
-
-**Independent Test**: [How to verify this story works on its own]
-
-### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
-
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
-
-### Implementation for User Story 3
-
-- [ ] T026 [P] [US3] Create [Entity] model in src/models/[entity].py
-- [ ] T027 [US3] Implement [Service] in src/services/[service].py
-- [ ] T028 [US3] Implement [endpoint/feature] in src/[location]/[file].py
-
-**Checkpoint**: All user stories should now be independently functional
+**检查点**: 此时，用户故事1应该完全功能化且可独立测试
 
 ---
 
-[Add more user story phases as needed, following the same pattern]
+## 阶段4: 用户故事2 - [标题] (优先级: P2)
+
+**目标**: [此故事交付内容的简要描述]
+
+**独立测试**: [如何验证此故事独立工作]
+
+### 用户故事2测试（可选 - 仅在要求测试时）⚠️
+
+- [ ] T018 [P] [US2] 在tests/contract/test_[name].py中的[端点]合同测试
+- [ ] T019 [P] [US2] 在tests/integration/test_[name].py中的[用户旅程]集成测试
+
+### 用户故事2实施
+
+- [ ] T020 [P] [US2] 在src/models/[entity].py中创建[实体]模型
+- [ ] T021 [US2] 在src/services/[service].py中实现[服务]
+- [ ] T022 [US2] 在src/[位置]/[文件].py中实现[端点/功能]
+- [ ] T023 [US2] 与用户故事1组件集成（如需要）
+
+**检查点**: 此时，用户故事1和2都应该独立工作
 
 ---
 
-## Phase N: Polish & Cross-Cutting Concerns
+## 阶段5: 用户故事3 - [标题] (优先级: P3)
 
-**Purpose**: Improvements that affect multiple user stories
+**目标**: [此故事交付内容的简要描述]
 
-- [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
-- [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
-- [ ] TXXX Security hardening
-- [ ] TXXX Run quickstart.md validation
+**独立测试**: [如何验证此故事独立工作]
 
----
+### 用户故事3测试（可选 - 仅在要求测试时）⚠️
 
-## Dependencies & Execution Order
+- [ ] T024 [P] [US3] 在tests/contract/test_[name].py中的[端点]合同测试
+- [ ] T025 [P] [US3] 在tests/integration/test_[name].py中的[用户旅程]集成测试
 
-### Phase Dependencies
+### 用户故事3实施
 
-- **Setup (Phase 1)**: No dependencies - can start immediately
-- **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
-- **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
-- **Polish (Final Phase)**: Depends on all desired user stories being complete
+- [ ] T026 [P] [US3] 在src/models/[entity].py中创建[实体]模型
+- [ ] T027 [US3] 在src/services/[service].py中实现[服务]
+- [ ] T028 [US3] 在src/[位置]/[文件].py中实现[端点/功能]
 
-### User Story Dependencies
-
-- **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
-
-### Within Each User Story
-
-- Tests (if included) MUST be written and FAIL before implementation
-- Models before services
-- Services before endpoints
-- Core implementation before integration
-- Story complete before moving to next priority
-
-### Parallel Opportunities
-
-- All Setup tasks marked [P] can run in parallel
-- All Foundational tasks marked [P] can run in parallel (within Phase 2)
-- Once Foundational phase completes, all user stories can start in parallel (if team capacity allows)
-- All tests for a user story marked [P] can run in parallel
-- Models within a story marked [P] can run in parallel
-- Different user stories can be worked on in parallel by different team members
+**检查点**: 所有用户故事现在都应该独立功能化
 
 ---
 
-## Parallel Example: User Story 1
+[根据需要添加更多用户故事阶段，遵循相同模式]
+
+---
+
+## 阶段N: 完善与横切关注点
+
+**目的**: 影响多个用户故事的改进
+
+- [ ] TXXX [P] 在docs/中更新文档
+- [ ] TXXX 代码清理和重构
+- [ ] TXXX 跨所有故事的性能优化
+- [ ] TXXX [P] 在tests/unit/中添加单元测试（如果要求）
+- [ ] TXXX 安全加固
+- [ ] TXXX 运行quickstart.md验证
+
+---
+
+## 依赖关系与执行顺序
+
+### 阶段依赖关系
+
+- **设置（阶段1）**: 无依赖 - 可以立即开始
+- **基础设施（阶段2）**: 依赖于设置完成 - 阻塞所有用户故事
+- **用户故事（阶段3+）**: 都依赖于基础设施阶段完成
+  - 然后用户故事可以并行进行（如果有人员）
+  - 或按优先级顺序进行（P1 → P2 → P3）
+- **完善（最后阶段）**: 依赖于所有期望的用户故事完成
+
+### 用户故事依赖关系
+
+- **用户故事1（P1）**: 可在基础设施（阶段2）后开始 - 无其他故事依赖
+- **用户故事2（P2）**: 可在基础设施（阶段2）后开始 - 可与US1集成但应独立测试
+- **用户故事3（P3）**: 可在基础设施（阶段2）后开始 - 可与US1/US2集成但应独立测试
+
+### 每个用户故事内部
+
+- 测试（如果包含）必须在实施前编写并失败
+- 模型在服务之前
+- 服务在端点之前
+- 核心实施在集成之前
+- 故事完成后再进行下一个优先级
+
+### 并行机会
+
+- 所有标记为[P]的设置任务可以并行运行
+- 所有标记为[P]的基础设施任务可以并行运行（在阶段2内）
+- 基础设施阶段完成后，所有用户故事可以并行开始（如果团队容量允许）
+- 用户故事的所有标记为[P]的测试可以并行运行
+- 故事内标记为[P]的模型可以并行运行
+- 不同用户故事可以由不同团队成员并行处理
+
+---
+
+## 并行示例：用户故事1
 
 ```bash
-# Launch all tests for User Story 1 together (if tests requested):
-Task: "Contract test for [endpoint] in tests/contract/test_[name].py"
-Task: "Integration test for [user journey] in tests/integration/test_[name].py"
+# 同时启动用户故事1的所有测试（如果要求测试）：
+任务: "在tests/contract/test_[name].py中的[端点]合同测试"
+任务: "在tests/integration/test_[name].py中的[用户旅程]集成测试"
 
-# Launch all models for User Story 1 together:
-Task: "Create [Entity1] model in src/models/[entity1].py"
-Task: "Create [Entity2] model in src/models/[entity2].py"
+# 同时启动用户故事1的所有模型：
+任务: "在src/models/[entity1].py中创建[实体1]模型"
+任务: "在src/models/[entity2].py中创建[实体2]模型"
 ```
 
 ---
 
-## Implementation Strategy
+## 实施策略
 
-### MVP First (User Story 1 Only)
+### 首先MVP（仅用户故事1）
 
-1. Complete Phase 1: Setup
-2. Complete Phase 2: Foundational (CRITICAL - blocks all stories)
-3. Complete Phase 3: User Story 1
-4. **STOP and VALIDATE**: Test User Story 1 independently
-5. Deploy/demo if ready
+1. 完成阶段1：设置
+2. 完成阶段2：基础设施（关键 - 阻塞所有故事）
+3. 完成阶段3：用户故事1
+4. **停止并验证**: 独立测试用户故事1
+5. 如果准备就绪则部署/演示
 
-### Incremental Delivery
+### 增量交付
 
-1. Complete Setup + Foundational → Foundation ready
-2. Add User Story 1 → Test independently → Deploy/Demo (MVP!)
-3. Add User Story 2 → Test independently → Deploy/Demo
-4. Add User Story 3 → Test independently → Deploy/Demo
-5. Each story adds value without breaking previous stories
+1. 完成设置 + 基础设施 → 基础设施就绪
+2. 添加用户故事1 → 独立测试 → 部署/演示（MVP！）
+3. 添加用户故事2 → 独立测试 → 部署/演示
+4. 添加用户故事3 → 独立测试 → 部署/演示
+5. 每个故事在不破坏先前故事的情况下增加价值
 
-### Parallel Team Strategy
+### 并行团队策略
 
-With multiple developers:
+拥有多个开发人员时：
 
-1. Team completes Setup + Foundational together
-2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
-3. Stories complete and integrate independently
+1. 团队一起完成设置 + 基础设施
+2. 基础设施完成后：
+   - 开发人员A：用户故事1
+   - 开发人员B：用户故事2
+   - 开发人员C：用户故事3
+3. 故事独立完成和集成
 
 ---
 
-## Notes
+## 备注
 
-- [P] tasks = different files, no dependencies
-- [Story] label maps task to specific user story for traceability
-- Each user story should be independently completable and testable
-- Verify tests fail before implementing
-- Commit after each task or logical group
-- Stop at any checkpoint to validate story independently
-- Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence
+- [P]任务 = 不同文件，无依赖关系
+- [故事]标签将任务映射到特定用户故事以便追溯
+- 每个用户故事应该可以独立完成和测试
+- 在实施前验证测试失败
+- 在每个任务或逻辑组后提交
+- 在任何检查点停止以独立验证故事
+- 避免：模糊任务、相同文件冲突、破坏独立性的跨故事依赖
 
 

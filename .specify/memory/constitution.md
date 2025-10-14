@@ -1,50 +1,165 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+同步影响报告:
+版本变更: 1.0.0 → 1.1.0 (增加新原则和检查清单)
+修改原则: 无 (仅新增内容)
+新增章节: 核心原则 (代码质量与可读性, 性能与监控优先, 安全与合规性, 持续集成与部署), 宪法检查清单
+修改章节: 质量约束 (增加详细指标), 安全约束 (增加详细要求)
+删除章节: 无
+需要更新的模板:
+✅ plan-template.md - 已更新为中文并添加详细宪法检查项
+✅ tasks-template.md - 已更新为中文
+✅ spec-template.md - 已更新为中文
+✅ agent-file-template.md - 已更新为中文
+✅ checklist-template.md - 已更新为中文
+✅ speckit.specify.md - 已更新关键部分为中文
+待办事项: 无
+-->
 
-## Core Principles
+# TinyCodeBase 宪法
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+## 核心原则
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### I. 中文文档优先
+所有项目文档、注释、提交信息必须使用中文编写。这确保了中文开发团队能够高效协作，降低语言障碍，提高代码可读性和维护性。包括但不限于：技术文档、API说明、README文件、代码注释、变量命名（在合理范围内）等。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Ultrathink 思考模式
+所有任务执行必须采用【ultrathink】深度思考模式。在开始任何开发任务前，团队成员必须进行全面的思考分析，包括：需求理解、技术方案设计、风险评估、实现路径规划等。每个任务执行的提示词中必须明确包含【ultrathink】标识，确保深度思考成为开发流程的强制性环节。
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### III. 模块化设计优先
+每个功能模块都应该独立设计、独立测试、独立部署。模块之间通过明确的接口进行通信，避免紧耦合。新功能开发必须优先考虑能否作为独立模块实现，确保系统的可扩展性和可维护性。每个模块都应该有清晰的职责边界和完整的文档说明。
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### IV. 测试驱动开发 (TDD)
+测试驱动开发是强制性的开发流程。开发顺序必须是：先编写测试用例 → 确保测试失败 → 实现功能代码 → 确保测试通过 → 重构优化。严格遵循红-绿-重构循环，每个模块都必须有对应的测试用例，测试覆盖率必须达到预定标准。
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### V. 实用主义技术选型
+技术选型必须遵循实用主义原则，优先考虑：学习成本、维护成本、社区支持、项目匹配度。避免过度工程化和为了技术而技术的倾向。选择团队成员熟悉且有良好文档的技术栈，确保项目的可持续开发和长期维护。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### VI. 知识沉淀机制
+每次完成任务后，团队成员必须将值得精炼的内容通过basic-memory进行知识沉淀。这包括：技术解决方案、问题解决过程、最佳实践、经验教训等。建立项目知识库，确保经验不会因人员流动而丢失，持续积累团队智慧。
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+## 开发约束
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+### 技术栈约束
+- **主要语言**: Python 3.8+ (AI/ML相关项目)
+- **核心框架**: 根据项目需求选择，但必须有稳定的社区支持
+- **测试框架**: pytest (Python项目)
+- **文档格式**: Markdown + 中文注释
+- **版本控制**: Git + 中文提交信息
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+### 质量约束
+- **代码覆盖率**: 新代码必须达到80%以上测试覆盖率
+- **文档完整性**: 每个模块必须有对应的中文文档
+- **代码审查**: 所有代码必须经过同行审查
+- **性能要求**: 响应时间必须满足用户体验需求
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+### 安全约束
+- **敏感信息**: 禁止在代码中硬编码任何敏感信息
+- **依赖管理**: 定期更新依赖包，修复安全漏洞
+- **输入验证**: 所有外部输入必须进行严格验证
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+## 开发工作流
+
+### 需求分析阶段
+1. 深度理解用户需求，使用【ultrathink】模式进行全面分析
+2. 编写详细的中文需求文档
+3. 设计技术方案，考虑多种实现路径
+4. 评估技术风险和实现复杂度
+
+### 开发实施阶段
+1. 编写测试用例，确保测试失败
+2. 实现核心功能代码
+3. 运行测试，确保功能正确
+4. 代码重构和优化
+5. 编写完整的中文文档
+
+### 验收测试阶段
+1. 产品经理进行功能验收
+2. 如有问题，首席研发负责修复
+3. 循环验收直到产品经理满意
+4. 进行知识沉淀，记录经验教训
+
+### 知识沉淀阶段
+1. 整理开发过程中的关键决策
+2. 记录遇到的问题和解决方案
+3. 提炼可复用的技术方案
+4. 通过basic-memory进行系统化存储
+
+## 治理规则
+
+### 宪法权威性
+本宪法是项目开发的最高指导原则，所有开发活动必须严格遵守。任何与宪法冲突的行为都需要重新评估。
+
+### 修正程序
+- **提案**: 任何团队成员都可以提出宪法修正建议
+- **讨论**: 需要团队讨论并达成共识
+- **文档**: 修正必须有明确的文档记录
+- **版本**: 每次修正都需要更新版本号
+
+### 合规审查
+- **定期审查**: 每季度进行宪法合规性审查
+- **项目审查**: 每个项目完成后进行合规性检查
+- **持续改进**: 根据项目实践不断完善宪法内容
+
+### 违规处理
+- **轻微违规**: 团队内部讨论和纠正
+- **严重违规**: 需要重新评估项目方向和团队配置
+- **持续违规**: 可能影响团队成员的参与资格
+
+## 宪法检查清单
+
+### 中文文档优先检查
+- [ ] 所有用户界面文本使用中文
+- [ ] 技术文档使用中文编写
+- [ ] 代码注释使用中文
+- [ ] API文档和README文件中文化
+
+### 模块化设计检查
+- [ ] 功能模块职责清晰
+- [ ] 模块间接口明确
+- [ ] 避免紧耦合设计
+- [ ] 支持独立部署
+- [ ] 模块文档完整
+
+### 测试驱动开发检查
+- [ ] 制定了测试策略
+- [ ] 确保测试覆盖率要求（80%+，核心95%+）
+- [ ] 遵循红-绿-重构循环
+- [ ] 包含性能测试用例
+- [ ] 测试在实施前编写并失败
+
+### 实用主义技术选型检查
+- [ ] 技术栈学习成本合理
+- [ ] 具有稳定社区支持
+- [ ] 符合项目实际需求
+- [ ] 避免过度工程化
+- [ ] 考虑长期维护成本
+
+### 知识沉淀机制检查
+- [ ] 规划了知识沉淀节点
+- [ ] 准备记录关键决策
+- [ ] 设置经验教训总结环节
+- [ ] 集成basic-memory工具
+- [ ] 建立团队知识库
+
+### 代码质量与可读性检查
+- [ ] 函数长度不超过50行
+- [ ] 圈复杂度不超过10
+- [ ] 嵌套深度不超过3层
+- [ ] 复杂逻辑有中文注释
+- [ ] 命名规范符合要求
+
+### 性能与监控检查
+- [ ] 关键路径有性能指标
+- [ ] 新功能包含性能测试
+- [ ] 实施结构化日志
+- [ ] 设置指标收集
+- [ ] 问题可快速定位
+
+### 质量约束检查
+- [ ] 代码覆盖率达标
+- [ ] 性能指标符合要求
+- [ ] 遵循代码复杂度限制
+- [ ] 实施代码审查流程
+- [ ] 文档完整性验证
+
+**版本**: 1.1.0 | **制定**: 2025-01-14 | **最后修订**: 2025-01-14
