@@ -7,12 +7,25 @@
  * - 组件初始化和事件绑定
  */
 
+// 导入工具类
+import { api } from './utils/api.js';
+import { domUtils } from './utils/dom.js';
+import { storage } from './utils/storage.js';
+
+// 导入组件
+import ProjectCard from './components/ProjectCard.js';
+import ImportForm from './components/ImportForm.js';
+import ProgressBar from './components/ProgressBar.js';
+import SearchBox from './components/SearchBox.js';
+import SearchResult from './components/SearchResult.js';
+
 class App {
     constructor() {
         this.currentPage = 'dashboard';
         this.components = {};
-        this.api = new API();
-        this.storage = new Storage();
+        this.api = api;
+        this.storage = storage;
+        this.dom = domUtils;
 
         this.init();
     }
@@ -22,9 +35,6 @@ class App {
      */
     async init() {
         try {
-            // 初始化DOM工具
-            this.dom = new DOMUtils();
-
             // 初始化组件
             await this.initComponents();
 
