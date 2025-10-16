@@ -194,6 +194,7 @@ class ProjectCard {
      * 截断路径
      */
     _truncatePath(path, maxLength = 50) {
+        if (!path) return '';
         if (path.length <= maxLength) return path;
         return '...' + path.substring(path.length - maxLength + 3);
     }

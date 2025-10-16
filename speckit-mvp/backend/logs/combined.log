@@ -877,3 +877,303 @@
   message: '项目创建成功',
   timestamp: '2025-10-16 22:45:15'
 }
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:06:40'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:06:46'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:06'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:23'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:23'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:55'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:10:38'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:10:44'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:03'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:07'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  taskId: 2,
+  projectId: 17,
+  taskType: 'import',
+  status: 'pending',
+  level: 'info',
+  message: '处理任务创建成功',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  status: 'processing',
+  errorMessage: null,
+  level: 'info',
+  message: '项目状态更新',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  taskId: 2,
+  name: '集成测试项目',
+  level: 'info',
+  message: '开始重新生成项目文档',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 13,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 12,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:52'
+}

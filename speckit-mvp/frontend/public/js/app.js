@@ -221,7 +221,7 @@ class App {
             this.components.importForm.hide();
             this.components.progressBar.show('正在导入项目...');
 
-            const response = await this.api.post('/api/v1/projects', data);
+            const response = await this.api.post('/projects', data);
 
             if (response.success) {
                 this.showNotification('项目导入成功', 'success');
@@ -255,7 +255,7 @@ class App {
     async handleProgressCancel() {
         try {
             // 取消当前任务
-            await this.api.post('/api/v1/tasks/cancel');
+            await this.api.post('/tasks/cancel');
             this.components.progressBar.hide();
             this.showNotification('任务已取消', 'warning');
         } catch (error) {
@@ -270,12 +270,12 @@ class App {
         try {
             this.showSearchLoading();
 
-            const response = await this.api.get('/api/v1/search', {
+            const response = await this.api.get('/search', {
                 q: query,
-                filters: filters
+                filters: JSON.stringify(filters)
             });
 
-            this.displaySearchResults(response.data);
+            this.displaySearchResults(response.data.results);
             this.saveSearchState(query, filters);
         } catch (error) {
             console.error('搜索失败:', error);
@@ -298,7 +298,7 @@ class App {
      */
     async handleSearchLoadMore(query, offset) {
         try {
-            const response = await this.api.get('/api/v1/search', {
+            const response = await this.api.get('/search', {
                 q: query,
                 offset: offset,
                 limit: 20
@@ -329,7 +329,7 @@ class App {
         }
 
         try {
-            await this.api.delete(`/api/v1/projects/${projectId}`);
+            await this.api.delete(`/projects/${projectId}`);
             this.showNotification('项目删除成功', 'success');
             this.loadProjects(); // 重新加载项目列表
         } catch (error) {
@@ -343,7 +343,7 @@ class App {
      */
     async handleProjectRegenerate(projectId) {
         try {
-            await this.api.post(`/api/v1/projects/${projectId}/regenerate`);
+            await this.api.post(`/projects/${projectId}/regenerate`);
             this.showNotification('开始重新生成文档', 'success');
             this.startProjectProcessing(projectId);
         } catch (error) {
@@ -357,7 +357,7 @@ class App {
      */
     async handleProjectExport(projectId, format) {
         try {
-            const response = await this.api.post(`/api/v1/projects/${projectId}/export`, {
+            const response = await this.api.post(`/projects/${projectId}/export`, {
                 format: format
             });
 
@@ -377,7 +377,7 @@ class App {
      */
     async loadProjects() {
         try {
-            const response = await this.api.get('/api/v1/projects');
+            const response = await this.api.get('/projects');
             this.displayProjects(response.data);
         } catch (error) {
             console.error('加载项目列表失败:', error);
@@ -434,9 +434,39 @@ class App {
             return;
         }
 
-        container.innerHTML = results.map(result =>
-            this.components.searchResult.render(result)
-        ).join('');
+        container.innerHTML = results.map(result => {
+            const title = result.title || result.name || '未命名';
+            const content = result.content || result.snippet || '';
+            const filePath = result.file_path || result.path || '';
+            const contentType = result.content_type || result.type || '';
+            const projectName = result.project_name || '';
+            
+            return `
+                <div class="search-result-item">
+                    <div class="result-header">
+                        <h4 class="result-title">${this.escapeHtml(title)}</h4>
+                        <span class="result-type">${this.escapeHtml(contentType)}</span>
+                    </div>
+                    <div class="result-content">
+                        <pre><code>${this.escapeHtml(content)}</code></pre>
+                    </div>
+                    <div class="result-footer">
+                        <span class="result-project">📁 ${this.escapeHtml(projectName)}</span>
+                        <span class="result-path">${this.escapeHtml(filePath)}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    /**
+     * HTML转义
+     */
+    escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
     }
 
     /**
@@ -446,7 +476,7 @@ class App {
         // 轮询任务状态
         const pollInterval = setInterval(async () => {
             try {
-                const response = await this.api.get(`/api/v1/tasks/${projectId}`);
+                const response = await this.api.get(`/tasks/${projectId}`);
                 const task = response.data;
 
                 // 更新进度
@@ -478,7 +508,7 @@ class App {
      */
     async checkPendingTasks() {
         try {
-            const response = await this.api.get('/api/v1/tasks/pending');
+            const response = await this.api.get('/tasks/pending');
 
             if (response.data && response.data.length > 0) {
                 // 恢复任务进度显示

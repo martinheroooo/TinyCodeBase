@@ -216,3 +216,46 @@
   message: '创建项目失败',
   timestamp: '2025-10-16 22:23:11'
 }
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: 'SQLITE_READONLY: attempt to write a readonly database',
+  data: {
+    name: '测试Commander项目',
+    description: '从 https://github.com/tj/commander.js.git 导入的项目',
+    type: 'git',
+    source_path: 'https://github.com/tj/commander.js.git',
+    branch: null,
+    config: {}
+  },
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 23:05:11'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: 'SQLITE_READONLY: attempt to write a readonly database',
+  stack: 'Error: SQLITE_READONLY: attempt to write a readonly database\n' +
+    '--> in Statement#run([\n' +
+    "  '测试Commander项目',\n" +
+    "  '从 https://github.com/tj/commander.js.git 导入的项目',\n" +
+    "  'git',\n" +
+    "  'https://github.com/tj/commander.js.git',\n" +
+    '  null,\n' +
+    "  'pending',\n" +
+    "  '{}',\n" +
+    "  '{}'\n" +
+    '], [Function: replacement])\n' +
+    '    at Database.<anonymous> (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/sqlite3/lib/sqlite3.js:76:19)\n' +
+    '    at Database.<anonymous> (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/sqlite3/lib/sqlite3.js:20:19)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/utils/database.js:274:21\n' +
+    '    at new Promise (<anonymous>)\n' +
+    '    at Database.run (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/utils/database.js:273:16)\n' +
+    '    at DatabaseHelper.insert (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/utils/database.js:459:39)\n' +
+    '    at Project.create (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/models/Project.js:50:49)\n' +
+    '    at async ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:147:29)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 23:05:11'
+}

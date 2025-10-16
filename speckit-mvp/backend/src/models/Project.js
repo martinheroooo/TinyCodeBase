@@ -400,6 +400,8 @@ class Project {
             name: this.name,
             description: this.description,
             type: this.type,
+            source_path: this.source_path,
+            branch: this.branch,
             status: this.status,
             stats: this.stats,
             created_at: this.created_at,
