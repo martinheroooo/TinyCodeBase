@@ -1372,3 +1372,27 @@
   message: '获取项目列表',
   timestamp: '2025-10-16 23:38:17'
 }
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:55'
+}
