@@ -143,9 +143,10 @@ body {
 /* 项目网格 */
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
     gap: 2rem;
     margin-top: 2rem;
+    align-items: start;
 }
 
 /* 按钮样式 */
@@ -195,6 +196,17 @@ body {
 
 .btn-danger:hover {
     background: #c82333;
+}
+
+.btn-success {
+    background: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
 }
 
 /* 响应式设计 */
