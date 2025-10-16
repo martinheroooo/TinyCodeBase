@@ -820,3 +820,60 @@
   message: '项目创建成功',
   timestamp: '2025-10-16 22:32:59'
 }
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:41:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:44:21'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:45:15'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:45:15'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  type: 'git',
+  source_path: 'https://github.com/example/test-repo.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:45:15'
+}

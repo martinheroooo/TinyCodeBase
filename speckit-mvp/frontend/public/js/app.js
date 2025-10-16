@@ -9,12 +9,30 @@
 
 // 等待全局变量加载完成
 function waitForGlobals() {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+        let attempts = 0;
+        const maxAttempts = 100; // 最多等待1秒
+        
         const checkGlobals = () => {
+            attempts++;
+            
             if (window.api && window.domUtils && window.storage &&
                 window.ProjectCard && window.ImportForm && window.ProgressBar &&
                 window.SearchBox && window.SearchResult) {
+                console.log('所有全局变量已加载完成');
                 resolve();
+            } else if (attempts >= maxAttempts) {
+                console.error('等待全局变量超时，已加载的变量:', {
+                    api: !!window.api,
+                    domUtils: !!window.domUtils,
+                    storage: !!window.storage,
+                    ProjectCard: !!window.ProjectCard,
+                    ImportForm: !!window.ImportForm,
+                    ProgressBar: !!window.ProgressBar,
+                    SearchBox: !!window.SearchBox,
+                    SearchResult: !!window.SearchResult
+                });
+                reject(new Error('等待全局变量超时'));
             } else {
                 setTimeout(checkGlobals, 10);
             }
@@ -588,8 +606,35 @@ class App {
 
 // 应用启动
 document.addEventListener('DOMContentLoaded', async () => {
-    await waitForGlobals();
-    window.app = new App();
+    try {
+        console.log('开始初始化应用...');
+        await waitForGlobals();
+        console.log('全局变量加载完成，创建应用实例...');
+        window.app = new App();
+        console.log('应用初始化完成');
+    } catch (error) {
+        console.error('应用初始化失败:', error);
+        
+        // 显示错误信息给用户
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4444;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 10000;
+            max-width: 400px;
+        `;
+        errorDiv.innerHTML = `
+            <h4>应用初始化失败</h4>
+            <p>${error.message}</p>
+            <button onclick="location.reload()" style="margin-top: 10px; padding: 5px 10px;">重新加载</button>
+        `;
+        document.body.appendChild(errorDiv);
+    }
 });
 
 // 全局错误处理
