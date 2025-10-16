@@ -1,0 +1,19 @@
+{
+  "watch": ["src", "package.json"],
+  "ext": "js,json",
+  "ignore": [
+    "src/tests/*",
+    "logs/*",
+    "data/*",
+    "temp/*",
+    "exports/*",
+    "*.log",
+    "node_modules/*"
+  ],
+  "exec": "node server.js",
+  "env": {
+    "NODE_ENV": "development"
+  },
+  "delay": 1000,
+  "verbose": true
+}

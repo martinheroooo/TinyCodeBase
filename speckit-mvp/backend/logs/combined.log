@@ -1,0 +1,1398 @@
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 0,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 21:55:38'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 21:55:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  type: 'git',
+  source_path: 'https://github.com/facebook/react.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 21:55:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 1,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 21:55:44'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  level: 'info',
+  message: '获取项目详情',
+  timestamp: '2025-10-16 21:55:46'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 2,
+  name: '本地测试项目',
+  type: 'local',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 21:55:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 2,
+  name: '本地测试项目',
+  type: 'local',
+  source_path: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 21:55:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称、类型和源路径为必填项',
+  stack: 'ValidationError: 项目名称、类型和源路径为必填项\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:118:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 21:56:00'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '无效的Git仓库URL格式',
+  stack: 'ValidationError: 无效的Git仓库URL格式\n' +
+    '    at ProjectController._validateGitUrl (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:372:19)\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:132:22)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 21:56:06'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  taskId: 1,
+  projectId: 1,
+  taskType: 'import',
+  status: 'pending',
+  level: 'info',
+  message: '处理任务创建成功',
+  timestamp: '2025-10-16 21:56:24'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  status: 'processing',
+  errorMessage: null,
+  level: 'info',
+  message: '项目状态更新',
+  timestamp: '2025-10-16 21:56:24'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  taskId: 1,
+  name: '测试React项目',
+  level: 'info',
+  message: '开始重新生成项目文档',
+  timestamp: '2025-10-16 21:56:24'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 2,
+  name: '本地测试项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 21:56:28'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 2,
+  name: '本地测试项目',
+  type: 'local',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 21:56:28'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 1,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 21:56:30'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 999,
+  error: '项目不存在',
+  level: 'error',
+  message: '查找项目失败',
+  timestamp: '2025-10-16 21:56:36'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目不存在',
+  stack: 'NotFoundError: 项目不存在\n' +
+    '    at Project.findById (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/models/Project.js:78:23)\n' +
+    '    at async ProjectController.getProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:84:29)',
+  level: 'error',
+  message: '获取项目详情失败',
+  timestamp: '2025-10-16 21:56:36'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '无效的项目ID',
+  stack: 'ValidationError: 无效的项目ID\n' +
+    '    at ProjectController.getProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:81:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at param (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:365:14)\n' +
+    '    at param (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:376:14)\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:421:3)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)',
+  level: 'error',
+  message: '获取项目详情失败',
+  timestamp: '2025-10-16 21:56:37'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 1,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:03:04'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称、类型和源路径为必填项',
+  stack: 'ValidationError: 项目名称、类型和源路径为必填项\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:118:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:03:07'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:03:20'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:03:20'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  level: 'info',
+  message: '获取项目详情',
+  timestamp: '2025-10-16 22:03:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称、类型和源路径为必填项',
+  stack: 'ValidationError: 项目名称、类型和源路径为必填项\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:118:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:03:34'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目类型必须是 git 或 local',
+  stack: 'ValidationError: 项目类型必须是 git 或 local\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:122:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:04:09'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 4,
+  name: "$(printf 'a%.0s' {1..300})",
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:04:16'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 4,
+  name: "$(printf 'a%.0s' {1..300})",
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:04:16'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 5,
+  name: '本地项目测试',
+  type: 'local',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:04:20'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 5,
+  name: '本地项目测试',
+  type: 'local',
+  source_path: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:04:20'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 4,
+  name: "$(printf 'a%.0s' {1..300})",
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 22:04:55'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 4,
+  name: "$(printf 'a%.0s' {1..300})",
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 22:04:55'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 6,
+  name: '完整功能测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:05:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 6,
+  name: '完整功能测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:05:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 7,
+  name: '测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:12:03'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 7,
+  name: '测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:12:03'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 5,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:12:05'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 8,
+  name: '前端功能测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:13:26'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 8,
+  name: '前端功能测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:13:26'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 6,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:13:31'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称已存在',
+  data: {
+    name: '测试项目',
+    description: '测试导入项目',
+    type: 'git',
+    source_path: 'https://github.com/octocat/Hello-World.git',
+    branch: 'main',
+    config: {}
+  },
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:16:59'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称已存在',
+  stack: 'ConflictError: 项目名称已存在\n' +
+    '    at Project.create (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/models/Project.js:46:23)\n' +
+    '    at async ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:147:29)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:16:59'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 9,
+  name: '测试项目1760624222',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:02'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 9,
+  name: '测试项目1760624222',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:02'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 7,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:17:07'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 7,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:17:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 10,
+  name: '前端测试项目1760624263892',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 10,
+  name: '前端测试项目1760624263892',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '无效的Git仓库URL格式',
+  stack: 'ValidationError: 无效的Git仓库URL格式\n' +
+    '    at ProjectController._validateGitUrl (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:372:19)\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:132:22)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:17:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称、类型和源路径为必填项',
+  stack: 'ValidationError: 项目名称、类型和源路径为必填项\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:118:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:17:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 11,
+  name: '产品经理验收项目1760624278',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:58'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 11,
+  name: '产品经理验收项目1760624278',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:17:58'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 9,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:21:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 9,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:23:11'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 9,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:23:11'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  error: '项目名称、类型和源路径为必填项',
+  stack: 'ValidationError: 项目名称、类型和源路径为必填项\n' +
+    '    at ProjectController.createProject (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/src/controllers/projects.js:118:23)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:149:13)\n' +
+    '    at Route.dispatch (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/route.js:119:3)\n' +
+    '    at Layer.handle [as handle_request] (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/layer.js:95:5)\n' +
+    '    at /Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:284:15\n' +
+    '    at Function.process_params (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:346:12)\n' +
+    '    at next (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:280:10)\n' +
+    '    at Function.handle (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:175:3)\n' +
+    '    at router (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/router/index.js:47:12)',
+  level: 'error',
+  message: '创建项目失败',
+  timestamp: '2025-10-16 22:23:11'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  name: '验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:23:29'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  name: '验收测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:23:29'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:26:41'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:30:09'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 13,
+  name: '产品经理最终验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:30:33'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 13,
+  name: '产品经理最终验收测试项目',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:30:33'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:32:50'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:50'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:50'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 13,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:32:59'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 16,
+  name: '最终测试项目1760625179777',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:59'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 16,
+  name: '最终测试项目1760625179777',
+  type: 'git',
+  source_path: 'https://github.com/octocat/Hello-World.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:32:59'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:41:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:44:21'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 22:45:15'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:45:15'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  type: 'git',
+  source_path: 'https://github.com/example/test-repo.git',
+  level: 'info',
+  message: '项目创建成功',
+  timestamp: '2025-10-16 22:45:15'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:06:40'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:06:46'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:06'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:23'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:07:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:23'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:43'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:09:55'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:10:38'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:10:44'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:03'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 15,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:07'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  taskId: 2,
+  projectId: 17,
+  taskType: 'import',
+  status: 'pending',
+  level: 'info',
+  message: '处理任务创建成功',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  name: '集成测试项目',
+  status: 'processing',
+  errorMessage: null,
+  level: 'info',
+  message: '项目状态更新',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 17,
+  taskId: 2,
+  name: '集成测试项目',
+  level: 'info',
+  message: '开始重新生成项目文档',
+  timestamp: '2025-10-16 23:11:22'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 15,
+  name: '测试项目API',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 14,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:39'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 14,
+  name: '最终测试项目1760625170156',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 13,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:42'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 1,
+  name: '测试React项目',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 12,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:48'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 3,
+  name: '产品验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:11:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:11:52'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:35:00'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:17'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:18'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:20'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:21'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:21'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  taskId: 3,
+  projectId: 12,
+  taskType: 'import',
+  status: 'pending',
+  level: 'info',
+  message: '处理任务创建成功',
+  timestamp: '2025-10-16 23:37:29'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  name: '验收测试项目',
+  status: 'processing',
+  errorMessage: null,
+  level: 'info',
+  message: '项目状态更新',
+  timestamp: '2025-10-16 23:37:29'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  taskId: 3,
+  name: '验收测试项目',
+  level: 'info',
+  message: '开始重新生成项目文档',
+  timestamp: '2025-10-16 23:37:29'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:34'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:37:35'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:04'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 11,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:05'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  name: '验收测试项目',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:38:12'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  projectId: 12,
+  name: '验收测试项目',
+  type: 'git',
+  level: 'info',
+  message: '项目删除成功',
+  timestamp: '2025-10-16 23:38:12'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:12'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:17'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:54'
+}
+{
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  count: 10,
+  page: 1,
+  limit: 20,
+  status: undefined,
+  type: undefined,
+  level: 'info',
+  message: '获取项目列表',
+  timestamp: '2025-10-16 23:38:55'
+}

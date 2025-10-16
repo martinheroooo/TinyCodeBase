@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>轻量级AI代码知识库</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 顶部导航栏 -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">
+                    <span class="logo-icon">📚</span>
+                    轻量级AI代码知识库
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-page="dashboard">仪表板</button>
+                    <button class="nav-btn" data-page="projects">项目管理</button>
+                    <button class="nav-btn" data-page="search">搜索</button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 主要内容区域 -->
+        <main class="main">
+            <div class="container">
+                <!-- 仪表板页面 -->
+                <div id="dashboard-page" class="page active">
+                    <div class="page-header">
+                        <h2>欢迎使用轻量级AI代码知识库</h2>
+                        <p>快速导入代码项目，自动生成结构化文档</p>
+                    </div>
+
+                    <div class="dashboard-actions">
+                        <div class="action-card">
+                            <div class="action-icon">🚀</div>
+                            <h3>导入代码</h3>
+                            <p>从Git仓库或本地文件夹导入代码项目</p>
+                            <button class="btn btn-primary" id="import-project-btn">开始导入</button>
+                        </div>
+
+                        <div class="action-card">
+                            <div class="action-icon">📊</div>
+                            <h3>项目统计</h3>
+                            <p>查看已导入项目的统计信息</p>
+                            <button class="btn btn-secondary" id="view-stats-btn">查看统计</button>
+                        </div>
+
+                        <div class="action-card">
+                            <div class="action-icon">🔍</div>
+                            <h3>搜索文档</h3>
+                            <p>在所有项目中搜索特定功能或代码</p>
+                            <button class="btn btn-secondary" id="global-search-btn">全局搜索</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目管理页面 -->
+                <div id="projects-page" class="page">
+                    <div class="page-header">
+                        <h2>项目管理</h2>
+                        <button class="btn btn-primary" id="new-project-btn">新建项目</button>
+                    </div>
+
+                    <div id="projects-list" class="projects-grid">
+                        <!-- 项目卡片将在这里动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 搜索页面 -->
+                <div id="search-page" class="page">
+                    <div class="page-header">
+                        <h2>搜索文档</h2>
+                    </div>
+
+                    <div class="search-container">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="搜索代码、函数、类或文档...">
+                            <button class="btn btn-primary" id="search-btn">搜索</button>
+                        </div>
+
+                        <div class="search-filters">
+                            <label>
+                                <input type="checkbox" id="filter-javascript" checked> JavaScript
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-python" checked> Python
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-java" checked> Java
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-typescript" checked> TypeScript
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-go" checked> Go
+                            </label>
+                            <label>
+                                <input type="checkbox" id="filter-cpp" checked> C/C++
+                            </label>
+                        </div>
+                    </div>
+
+                    <div id="search-results" class="search-results">
+                        <!-- 搜索结果将在这里动态显示 -->
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- 导入项目对话框 -->
+        <div id="import-dialog" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>导入代码项目</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="import-tabs">
+                        <button class="tab-btn active" data-tab="git">Git仓库</button>
+                        <button class="tab-btn" data-tab="local">本地文件夹</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="git-tab" class="tab-pane active">
+                            <div class="form-group">
+                                <label for="git-url">Git仓库URL</label>
+                                <input type="text" id="git-url" placeholder="https://github.com/user/repo.git">
+                            </div>
+                            <div class="form-group">
+                                <label for="git-branch">分支（可选）</label>
+                                <input type="text" id="git-branch" placeholder="main">
+                            </div>
+                        </div>
+
+                        <div id="local-tab" class="tab-pane">
+                            <div class="form-group">
+                                <label for="local-path">本地文件夹路径</label>
+                                <input type="text" id="local-path" placeholder="/path/to/your/project">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="project-name">项目名称</label>
+                        <input type="text" id="project-name" placeholder="我的项目">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancel-import-btn">取消</button>
+                    <button class="btn btn-primary" id="confirm-import-btn">开始导入</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 进度条组件 -->
+        <div id="progress-container" class="progress-container hidden">
+            <div class="progress-header">
+                <h4 id="progress-title">正在处理...</h4>
+                <button class="btn btn-small" id="cancel-progress-btn">取消</button>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="progress-info">
+                <span id="progress-text">准备中...</span>
+                <span id="progress-percent">0%</span>
+            </div>
+        </div>
+
+        <!-- 通知组件 -->
+        <div id="notifications" class="notifications">
+            <!-- 通知消息将在这里动态显示 -->
+        </div>
+    </div>
+
+    <!-- JavaScript工具类 -->
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/dom.js"></script>
+    <script src="js/utils/storage.js"></script>
+
+    <!-- JavaScript组件 -->
+    <script src="js/components/ImportForm.js"></script>
+    <script src="js/components/ProgressBar.js"></script>
+    <script src="js/components/SearchBox.js"></script>
+    <script src="js/components/ProjectCard.js"></script>
+    <script src="js/components/SearchResult.js"></script>
+
+    <!-- 主应用 -->
+    <script src="js/app.js"></script>
+</body>
+</html>

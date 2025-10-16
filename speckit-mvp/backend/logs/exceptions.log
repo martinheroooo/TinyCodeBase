@@ -1,0 +1,490 @@
+{
+  error: Error: listen EADDRINUSE: address already in use :::3000
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)
+      at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28) {
+    code: 'EADDRINUSE',
+    errno: -48,
+    syscall: 'listen',
+    address: '::',
+    port: 3000
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::3000\n' +
+    'Error: listen EADDRINUSE: address already in use :::3000\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::3000\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  exception: true,
+  date: 'Thu Oct 16 2025 21:54:10 GMT+0800 (中国标准时间)',
+  process: {
+    pid: 87746,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend',
+    execPath: '/usr/local/bin/node',
+    version: 'v22.18.0',
+    argv: [
+      '/usr/local/bin/node',
+      '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js'
+    ],
+    memoryUsage: {
+      rss: 62160896,
+      heapTotal: 19005440,
+      heapUsed: 10891416,
+      external: 2136347,
+      arrayBuffers: 18875
+    }
+  },
+  os: {
+    loadavg: [ 14.31640625, 8.52001953125, 5.8876953125 ],
+    uptime: 6138787
+  },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 24,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js',
+      function: 'Function.listen',
+      line: 635,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 28,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js',
+      function: 'startServer',
+      line: 175,
+      method: null,
+      native: false
+    }
+  ],
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  timestamp: '2025-10-16 21:54:10'
+}
+{
+  error: Error: listen EADDRINUSE: address already in use :::3001
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)
+      at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28) {
+    code: 'EADDRINUSE',
+    errno: -48,
+    syscall: 'listen',
+    address: '::',
+    port: 3001
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::3001\n' +
+    'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  exception: true,
+  date: 'Thu Oct 16 2025 22:26:31 GMT+0800 (中国标准时间)',
+  process: {
+    pid: 22315,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend',
+    execPath: '/usr/local/bin/node',
+    version: 'v22.18.0',
+    argv: [
+      '/usr/local/bin/node',
+      '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js'
+    ],
+    memoryUsage: {
+      rss: 63078400,
+      heapTotal: 19005440,
+      heapUsed: 10855488,
+      external: 2136347,
+      arrayBuffers: 18875
+    }
+  },
+  os: {
+    loadavg: [ 3.4130859375, 4.658203125, 4.4326171875 ],
+    uptime: 6140728
+  },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 24,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js',
+      function: 'Function.listen',
+      line: 635,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 28,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js',
+      function: 'startServer',
+      line: 175,
+      method: null,
+      native: false
+    }
+  ],
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  timestamp: '2025-10-16 22:26:31'
+}
+{
+  error: Error: listen EADDRINUSE: address already in use :::3001
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)
+      at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28) {
+    code: 'EADDRINUSE',
+    errno: -48,
+    syscall: 'listen',
+    address: '::',
+    port: 3001
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::3001\n' +
+    'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  exception: true,
+  date: 'Thu Oct 16 2025 22:41:36 GMT+0800 (China Standard Time)',
+  process: {
+    pid: 40818,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend',
+    execPath: '/usr/local/bin/node',
+    version: 'v22.18.0',
+    argv: [
+      '/usr/local/bin/node',
+      '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js'
+    ],
+    memoryUsage: {
+      rss: 60260352,
+      heapTotal: 18481152,
+      heapUsed: 12295024,
+      external: 2136347,
+      arrayBuffers: 18875
+    }
+  },
+  os: {
+    loadavg: [ 4.34521484375, 4.47509765625, 4.5625 ],
+    uptime: 6141633
+  },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 24,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js',
+      function: 'Function.listen',
+      line: 635,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 28,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js',
+      function: 'startServer',
+      line: 175,
+      method: null,
+      native: false
+    }
+  ],
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  timestamp: '2025-10-16 22:41:36'
+}
+{
+  error: Error: listen EADDRINUSE: address already in use :::3001
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)
+      at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28) {
+    code: 'EADDRINUSE',
+    errno: -48,
+    syscall: 'listen',
+    address: '::',
+    port: 3001
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::3001\n' +
+    'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  exception: true,
+  date: 'Thu Oct 16 2025 22:59:17 GMT+0800 (China Standard Time)',
+  process: {
+    pid: 69154,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend',
+    execPath: '/usr/local/bin/node',
+    version: 'v22.18.0',
+    argv: [
+      '/usr/local/bin/node',
+      '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js'
+    ],
+    memoryUsage: {
+      rss: 60211200,
+      heapTotal: 18481152,
+      heapUsed: 12297560,
+      external: 2136347,
+      arrayBuffers: 18875
+    }
+  },
+  os: {
+    loadavg: [ 2.435546875, 2.92919921875, 3.56103515625 ],
+    uptime: 6142694
+  },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 24,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js',
+      function: 'Function.listen',
+      line: 635,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 28,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js',
+      function: 'startServer',
+      line: 175,
+      method: null,
+      native: false
+    }
+  ],
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  timestamp: '2025-10-16 22:59:17'
+}
+{
+  error: Error: listen EADDRINUSE: address already in use :::3001
+      at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+      at listenInCluster (node:net:1997:12)
+      at Server.listen (node:net:2102:7)
+      at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)
+      at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28) {
+    code: 'EADDRINUSE',
+    errno: -48,
+    syscall: 'listen',
+    address: '::',
+    port: 3001
+  },
+  level: 'error',
+  message: 'uncaughtException: listen EADDRINUSE: address already in use :::3001\n' +
+    'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  stack: 'Error: listen EADDRINUSE: address already in use :::3001\n' +
+    '    at Server.setupListenHandle [as _listen2] (node:net:1940:16)\n' +
+    '    at listenInCluster (node:net:1997:12)\n' +
+    '    at Server.listen (node:net:2102:7)\n' +
+    '    at Function.listen (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js:635:24)\n' +
+    '    at startServer (/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js:175:28)',
+  exception: true,
+  date: 'Thu Oct 16 2025 23:37:43 GMT+0800 (中国标准时间)',
+  process: {
+    pid: 37735,
+    uid: 501,
+    gid: 20,
+    cwd: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend',
+    execPath: '/usr/local/bin/node',
+    version: 'v22.18.0',
+    argv: [
+      '/usr/local/bin/node',
+      '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js'
+    ],
+    memoryUsage: {
+      rss: 61849600,
+      heapTotal: 19005440,
+      heapUsed: 10956368,
+      external: 2136347,
+      arrayBuffers: 18875
+    }
+  },
+  os: {
+    loadavg: [ 2.30322265625, 2.7919921875, 2.93359375 ],
+    uptime: 6145000
+  },
+  trace: [
+    {
+      column: 16,
+      file: 'node:net',
+      function: 'Server.setupListenHandle [as _listen2]',
+      line: 1940,
+      method: 'setupListenHandle [as _listen2]',
+      native: false
+    },
+    {
+      column: 12,
+      file: 'node:net',
+      function: 'listenInCluster',
+      line: 1997,
+      method: null,
+      native: false
+    },
+    {
+      column: 7,
+      file: 'node:net',
+      function: 'Server.listen',
+      line: 2102,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 24,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/node_modules/express/lib/application.js',
+      function: 'Function.listen',
+      line: 635,
+      method: 'listen',
+      native: false
+    },
+    {
+      column: 28,
+      file: '/Users/lizhe/SEO/workspace/TinyCodeBase/speckit-mvp/backend/server.js',
+      function: 'startServer',
+      line: 175,
+      method: null,
+      native: false
+    }
+  ],
+  service: 'speckit-mvp',
+  version: '1.0.0',
+  timestamp: '2025-10-16 23:37:43'
+}

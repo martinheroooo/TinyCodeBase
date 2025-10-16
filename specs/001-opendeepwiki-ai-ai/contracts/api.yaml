@@ -1,0 +1,751 @@
+openapi: 3.0.3
+info:
+  title: 轻量级AI代码知识库API
+  description: 用于代码仓库导入、分析和文档生成的RESTful API
+  version: 1.0.0
+  contact:
+    name: 开发团队
+  license:
+    name: MIT
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: 本地开发服务器
+
+paths:
+  /projects:
+    get:
+      summary: 获取项目列表
+      description: 获取所有已导入的项目列表
+      tags:
+        - 项目管理
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: 页码
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+          description: 每页数量
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, processing, completed, failed]
+          description: 按状态过滤
+      responses:
+        '200':
+          description: 成功获取项目列表
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                  type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: 创建新项目
+      description: 导入新的Git仓库或本地文件夹
+      tags:
+        - 项目管理
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProjectRequest'
+      responses:
+        '201':
+          description: 项目创建成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Project'
+                  message:
+                    type: string
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{projectId}:
+    get:
+      summary: 获取项目详情
+      description: 获取指定项目的详细信息
+      tags:
+        - 项目管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+      responses:
+        '200':
+          description: 成功获取项目详情
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/ProjectDetail'
+        '404':
+          description: 项目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: 删除项目
+      description: 删除指定项目及其所有相关数据
+      tags:
+        - 项目管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+      responses:
+        '200':
+          description: 项目删除成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '404':
+          description: 项目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: 重新生成文档
+      description: 重新分析项目代码并生成文档
+      tags:
+        - 项目管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+      responses:
+        '200':
+          description: 重新生成任务已启动
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/ProcessingTask'
+                  message:
+                    type: string
+        '404':
+          description: 项目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{projectId}/documents:
+    get:
+      summary: 获取项目文档结构
+      description: 获取项目的完整文档树结构
+      tags:
+        - 文档管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [directory, file, class, function]
+          description: 按类型过滤
+        - name: search
+          in: query
+          schema:
+            type: string
+          description: 搜索关键词
+      responses:
+        '200':
+          description: 成功获取文档结构
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DocumentNode'
+        '404':
+          description: 项目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{projectId}/documents/{nodeId}:
+    get:
+      summary: 获取文档节点详情
+      description: 获取指定文档节点的详细信息
+      tags:
+        - 文档管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+        - name: nodeId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 文档节点ID
+        - name: include_source
+          in: query
+          schema:
+            type: boolean
+            default: false
+          description: 是否包含源代码片段
+      responses:
+        '200':
+          description: 成功获取节点详情
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/DocumentNodeDetail'
+        '404':
+          description: 节点不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /projects/{projectId}/export:
+    post:
+      summary: 导出项目文档
+      description: 将项目文档导出为指定格式
+      tags:
+        - 文档管理
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 项目ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExportRequest'
+      responses:
+        '200':
+          description: 导出任务已启动
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/ExportTask'
+                  message:
+                    type: string
+        '400':
+          description: 请求参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: 项目不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /tasks/{taskId}:
+    get:
+      summary: 获取任务状态
+      description: 获取处理任务的当前状态和进度
+      tags:
+        - 任务管理
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: 任务ID
+      responses:
+        '200':
+          description: 成功获取任务状态
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/ProcessingTask'
+        '404':
+          description: 任务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /search:
+    get:
+      summary: 全局搜索
+      description: 在所有项目文档中搜索关键词
+      tags:
+        - 搜索
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+          description: 搜索关键词
+        - name: project_id
+          in: query
+          schema:
+            type: integer
+          description: 限制在特定项目中搜索
+        - name: type
+          in: query
+          schema:
+            type: string
+            enum: [name, description, code]
+          description: 搜索内容类型
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 20
+          description: 返回结果数量限制
+      responses:
+        '200':
+          description: 搜索成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SearchResult'
+                  total:
+                    type: integer
+                  query:
+                    type: string
+        '400':
+          description: 搜索参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: 服务器错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "我的项目"
+        type:
+          type: string
+          enum: [git, local]
+          example: git
+        source:
+          type: string
+          example: "https://github.com/user/repo.git"
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          example: completed
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:00:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:30:00Z"
+        metadata:
+          type: object
+          example:
+            file_count: 150
+            line_count: 15000
+
+    ProjectDetail:
+      allOf:
+        - $ref: '#/components/schemas/Project'
+        - type: object
+          properties:
+            files:
+              type: array
+              items:
+                $ref: '#/components/schemas/File'
+            documents:
+              type: array
+              items:
+                $ref: '#/components/schemas/DocumentNode'
+            tasks:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProcessingTask'
+
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        path:
+          type: string
+          example: "src/components/Button.js"
+        name:
+          type: string
+          example: "Button.js"
+        extension:
+          type: string
+          example: ".js"
+        language:
+          type: string
+          example: "JavaScript"
+        size:
+          type: integer
+          example: 2048
+        line_count:
+          type: integer
+          example: 80
+        is_binary:
+          type: boolean
+          example: false
+
+    DocumentNode:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        type:
+          type: string
+          enum: [directory, file, class, function]
+          example: function
+        name:
+          type: string
+          example: "handleSubmit"
+        path:
+          type: string
+          example: "src/components/Button.js#handleSubmit"
+        description:
+          type: string
+          example: "处理表单提交事件，验证输入数据并调用API"
+        signature:
+          type: string
+          example: "handleSubmit(event: Event): Promise<void>"
+        file_id:
+          type: integer
+          example: 5
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:30:00Z"
+
+    DocumentNodeDetail:
+      allOf:
+        - $ref: '#/components/schemas/DocumentNode'
+        - type: object
+          properties:
+            metadata:
+              type: object
+              example:
+                parameters:
+                  - name: event
+                    type: Event
+                return_type: Promise<void>
+            source_code:
+              type: string
+              example: "const handleSubmit = async (event) => { /* ... */ };"
+            children:
+              type: array
+              items:
+                $ref: '#/components/schemas/DocumentNode'
+
+    ProcessingTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        project_id:
+          type: integer
+          example: 1
+        type:
+          type: string
+          enum: [import, analyze, generate_docs]
+          example: analyze
+        status:
+          type: string
+          enum: [pending, running, completed, failed]
+          example: running
+        progress:
+          type: integer
+          minimum: 0
+          maximum: 100
+          example: 45
+        current_step:
+          type: string
+          example: "正在分析JavaScript文件"
+        message:
+          type: string
+          example: "处理中：已扫描45个文件"
+        started_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:30:00Z"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:30:00Z"
+
+    CreateProjectRequest:
+      type: object
+      required:
+        - name
+        - type
+        - source
+      properties:
+        name:
+          type: string
+          description: 项目名称
+          example: "我的React项目"
+        type:
+          type: string
+          enum: [git, local]
+          description: 项目类型
+          example: git
+        source:
+          type: string
+          description: Git仓库URL或本地文件夹路径
+          example: "https://github.com/user/repo.git"
+
+    ExportRequest:
+      type: object
+      required:
+        - format
+      properties:
+        format:
+          type: string
+          enum: [markdown, pdf, html]
+          description: 导出格式
+          example: markdown
+        include_source:
+          type: boolean
+          description: 是否包含源代码
+          default: false
+          example: true
+
+    ExportTask:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        project_id:
+          type: integer
+          example: 1
+        format:
+          type: string
+          example: markdown
+        status:
+          type: string
+          enum: [pending, processing, completed, failed]
+          example: processing
+        download_url:
+          type: string
+          example: "/downloads/project_1_20250114.md"
+        created_at:
+          type: string
+          format: date-time
+          example: "2025-01-14T10:30:00Z"
+
+    SearchResult:
+      type: object
+      properties:
+        document_node:
+          $ref: '#/components/schemas/DocumentNode'
+        project:
+          $ref: '#/components/schemas/Project'
+        content_type:
+          type: string
+          example: description
+        highlights:
+          type: array
+          items:
+            type: string
+          example: ["处理", "表单", "提交"]
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+          example: 1
+        limit:
+          type: integer
+          example: 20
+        total:
+          type: integer
+          example: 150
+        totalPages:
+          type: integer
+          example: 8
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: "项目不存在"
+        code:
+          type: string
+          example: "NOT_FOUND"
+        details:
+          type: object
+          example:
+            field: "project_id"
+            value: 999
