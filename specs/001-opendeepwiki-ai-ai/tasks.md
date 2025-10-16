@@ -24,13 +24,13 @@ description: "轻量级AI代码知识库功能实现的任务列表"
 
 **目的**: 项目初始化和基本结构
 
-- [ ] T001 创建speckit-mvp项目根目录结构
-- [ ] T002 初始化Node.js后端项目，安装Express.js和相关依赖
-- [ ] T003 [P] 配置代码检查和格式化工具（ESLint, Prettier）
-- [ ] T004 创建环境配置文件（.env.example）和环境变量管理
-- [ ] T005 [P] 创建前端基础文件结构（HTML, CSS, JS）
-- [ ] T006 配置SQLite数据库文件和初始化脚本
-- [ ] T007 [P] 配置开发服务器和热重载功能
+- [x] T001 创建speckit-mvp项目根目录结构
+- [x] T002 初始化Node.js后端项目，安装Express.js和相关依赖
+- [x] T003 [P] 配置代码检查和格式化工具（ESLint, Prettier）
+- [x] T004 创建环境配置文件（.env.example）和环境变量管理
+- [x] T005 [P] 创建前端基础文件结构（HTML, CSS, JS）
+- [x] T006 配置SQLite数据库文件和初始化脚本
+- [x] T007 [P] 配置开发服务器和热重载功能
 
 ---
 
@@ -40,16 +40,16 @@ description: "轻量级AI代码知识库功能实现的任务列表"
 
 **⚠️ 关键**: 在此阶段完成之前，无法开始任何用户故事工作
 
-- [ ] T008 设置SQLite数据库模式和迁移框架
-- [ ] T009 [P] 创建数据库连接池和基础数据访问层
-- [ ] T010 [P] 设置Express.js API路由和中间件结构
-- [ ] T011 创建错误处理和日志记录基础设施
-- [ ] T012 设置文件上传和临时文件管理
-- [ ] T013 [P] 创建项目、文件、文档节点的基础模型
-- [ ] T014 [P] 配置大模型API客户端和认证机制
-- [ ] T015 设置代码解析器基础框架（Tree-sitter）
-- [ ] T016 配置搜索索引和全文搜索基础设施
-- [ ] T017 创建异步任务队列和进度管理
+- [x] T008 设置SQLite数据库模式和迁移框架
+- [x] T009 [P] 创建数据库连接池和基础数据访问层
+- [x] T010 [P] 设置Express.js API路由和中间件结构
+- [x] T011 创建错误处理和日志记录基础设施
+- [x] T012 设置文件上传和临时文件管理
+- [x] T013 [P] 创建项目、文件、文档节点的基础模型
+- [x] T014 [P] 配置大模型API客户端和认证机制
+- [x] T015 设置代码解析器基础框架（Tree-sitter）
+- [x] T016 配置搜索索引和全文搜索基础设施
+- [x] T017 创建异步任务队列和进度管理
 
 **检查点**: 基础设施就绪 - 用户故事实施现在可以并行开始
 
@@ -63,19 +63,19 @@ description: "轻量级AI代码知识库功能实现的任务列表"
 
 ### 用户故事1实施
 
-- [ ] T018 [P] [US1] 在backend/src/controllers/projects.js中创建项目控制器
-- [ ] T019 [P] [US1] 在backend/src/services/gitService.js中实现Git仓库克隆服务
-- [ ] T020 [P] [US1] 在backend/src/services/gitService.js中实现本地文件夹扫描服务
-- [ ] T021 [US1] 在backend/src/services/fileService.js中实现文件分析和元数据提取
-- [ ] T022 [US1] 在backend/src/models/Project.js中创建项目管理数据模型
-- [ ] T023 [P] [US1] 在backend/src/models/File.js中创建文件管理数据模型
-- [ ] T024 [US1] 在backend/src/models/ProcessingTask.js中创建任务状态管理模型
-- [ ] T025 [US1] 在backend/src/api/routes/projects.js中实现项目相关API端点
-- [ ] T026 [US1] 在frontend/public/js/components/ImportForm.js中创建导入表单组件
-- [ ] T027 [P] [US1] 在frontend/public/js/components/ProgressBar.js中创建进度显示组件
-- [ ] T028 [US1] 在frontend/public/js/app.js中集成项目导入功能
-- [ ] T029 [US1] 添加导入错误处理和用户友好的错误信息
-- [ ] T030 [US1] 实现导入过程中的实时进度更新机制
+- [x] T018 [P] [US1] 在backend/src/controllers/projects.js中创建项目控制器
+- [x] T019 [P] [US1] 在backend/src/services/gitService.js中实现Git仓库克隆服务
+- [x] T020 [P] [US1] 在backend/src/services/gitService.js中实现本地文件夹扫描服务
+- [x] T021 [US1] 在backend/src/services/fileService.js中实现文件分析和元数据提取
+- [x] T022 [US1] 在backend/src/models/Project.js中创建项目管理数据模型
+- [x] T023 [P] [US1] 在backend/src/models/File.js中创建文件管理数据模型
+- [x] T024 [US1] 在backend/src/models/ProcessingTask.js中创建任务状态管理模型
+- [x] T025 [US1] 在backend/src/api/routes/projects.js中实现项目相关API端点
+- [x] T026 [US1] 在frontend/public/js/components/ImportForm.js中创建导入表单组件
+- [x] T027 [P] [US1] 在frontend/public/js/components/ProgressBar.js中创建进度显示组件
+- [x] T028 [US1] 在frontend/public/js/app.js中集成项目导入功能
+- [x] T029 [US1] 添加导入错误处理和用户友好的错误信息
+- [x] T030 [US1] 实现导入过程中的实时进度更新机制
 
 **检查点**: 此时，用户故事1应该完全功能化且可独立测试
 
