@@ -183,7 +183,7 @@ class ImportForm {
         if (modal) {
             modal.classList.remove('active');
         }
-        this.onCancel();
+        // 修复无限递归问题：移除onCancel调用，因为app.js的handleImportCancel会直接处理
     }
 
     /**
@@ -575,3 +575,6 @@ if (typeof document !== 'undefined') {
     styleElement.textContent = styles;
     document.head.appendChild(styleElement);
 }
+
+// 导出为全局变量
+window.ImportForm = ImportForm;

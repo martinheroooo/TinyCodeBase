@@ -588,5 +588,6 @@ class DOMUtils {
 // 创建全局实例
 const domUtils = new DOMUtils();
 
-// 导出工具类和实例
-export { DOMUtils, domUtils };
+// 导出为全局变量
+window.DOMUtils = DOMUtils;
+window.domUtils = domUtils;

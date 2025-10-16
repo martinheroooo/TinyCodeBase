@@ -7,25 +7,29 @@
  * - 组件初始化和事件绑定
  */
 
-// 导入工具类
-import { api } from './utils/api.js';
-import { domUtils } from './utils/dom.js';
-import { storage } from './utils/storage.js';
-
-// 导入组件
-import ProjectCard from './components/ProjectCard.js';
-import ImportForm from './components/ImportForm.js';
-import ProgressBar from './components/ProgressBar.js';
-import SearchBox from './components/SearchBox.js';
-import SearchResult from './components/SearchResult.js';
+// 等待全局变量加载完成
+function waitForGlobals() {
+    return new Promise((resolve) => {
+        const checkGlobals = () => {
+            if (window.api && window.domUtils && window.storage &&
+                window.ProjectCard && window.ImportForm && window.ProgressBar &&
+                window.SearchBox && window.SearchResult) {
+                resolve();
+            } else {
+                setTimeout(checkGlobals, 10);
+            }
+        };
+        checkGlobals();
+    });
+}
 
 class App {
     constructor() {
         this.currentPage = 'dashboard';
         this.components = {};
-        this.api = api;
-        this.storage = storage;
-        this.dom = domUtils;
+        this.api = window.api;
+        this.storage = window.storage;
+        this.dom = window.domUtils;
 
         this.init();
     }
@@ -56,30 +60,37 @@ class App {
      */
     async initComponents() {
         // 导入表单组件
-        this.components.importForm = new ImportForm({
+        this.components.importForm = new window.ImportForm({
             onSubmit: this.handleImportSubmit.bind(this),
             onCancel: this.handleImportCancel.bind(this)
         });
 
         // 进度条组件
-        this.components.progressBar = new ProgressBar({
+        this.components.progressBar = new window.ProgressBar({
             container: document.getElementById('progress-container'),
             onCancel: this.handleProgressCancel.bind(this)
         });
 
         // 搜索框组件
-        this.components.searchBox = new SearchBox({
+        this.components.searchBox = new window.SearchBox({
             input: document.getElementById('search-input'),
             button: document.getElementById('search-btn'),
             onSearch: this.handleSearch.bind(this)
         });
 
         // 项目卡片组件
-        this.components.projectCard = new ProjectCard({
+        this.components.projectCard = new window.ProjectCard({
             onView: this.handleProjectView.bind(this),
             onDelete: this.handleProjectDelete.bind(this),
             onRegenerate: this.handleProjectRegenerate.bind(this),
             onExport: this.handleProjectExport.bind(this)
+        });
+
+        // 搜索结果组件
+        this.components.searchResult = new window.SearchResult({
+            container: document.getElementById('search-results'),
+            onSelect: this.handleSearchResultSelect.bind(this),
+            onLoadMore: this.handleSearchLoadMore.bind(this)
         });
     }
 
@@ -212,7 +223,12 @@ class App {
      * 处理导入取消
      */
     handleImportCancel() {
-        this.components.importForm.hide();
+        // 修复无限递归问题：不再调用hide()，因为hide()已经会调用这个方法
+        // 直接关闭模态框即可
+        const modal = document.getElementById('import-dialog');
+        if (modal) {
+            modal.classList.remove('active');
+        }
     }
 
     /**
@@ -247,6 +263,33 @@ class App {
             console.error('搜索失败:', error);
             this.showNotification(`搜索失败: ${error.message}`, 'error');
             this.hideSearchLoading();
+        }
+    }
+
+    /**
+     * 处理搜索结果选择
+     */
+    handleSearchResultSelect(result) {
+        console.log('搜索结果选择:', result);
+        // 这里可以实现跳转到具体结果的功能
+        this.showNotification('详情功能开发中...', 'warning');
+    }
+
+    /**
+     * 处理搜索加载更多
+     */
+    async handleSearchLoadMore(query, offset) {
+        try {
+            const response = await this.api.get('/api/v1/search', {
+                q: query,
+                offset: offset,
+                limit: 20
+            });
+
+            return response.data;
+        } catch (error) {
+            console.error('加载更多搜索结果失败:', error);
+            return [];
         }
     }
 
@@ -544,7 +587,8 @@ class App {
 }
 
 // 应用启动
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+    await waitForGlobals();
     window.app = new App();
 });
 

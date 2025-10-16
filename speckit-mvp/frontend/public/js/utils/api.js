@@ -23,8 +23,9 @@ class API {
      * 初始化API客户端
      */
     init() {
-        // 设置基础URL
-        this.baseURL = window.location.origin + '/api/v1';
+        // 设置基础URL - 修复路径重复问题
+        // 后端运行在3001端口，所以需要指定完整URL
+        this.baseURL = 'http://localhost:3001/api/v1';
 
         // 设置请求拦截器
         this.setupInterceptors();
@@ -407,5 +408,6 @@ class API {
 // 创建全局API实例
 const api = new API();
 
-// 导出API类和实例
-export { API, api };
+// 导出为全局变量
+window.API = API;
+window.api = api;

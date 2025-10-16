@@ -43,6 +43,27 @@ class Storage {
     }
 
     /**
+     * 便捷的set方法 - 修复storage.get未定义问题
+     */
+    set(key, value, ttl = null) {
+        return this.setLocal(key, value, ttl);
+    }
+
+    /**
+     * 便捷的get方法 - 修复storage.get未定义问题
+     */
+    get(key, defaultValue = null) {
+        return this.getLocal(key, defaultValue);
+    }
+
+    /**
+     * 便捷的remove方法
+     */
+    remove(key) {
+        return this.removeLocal(key);
+    }
+
+    /**
      * 设置sessionStorage
      */
     setSession(key, value, ttl = null) {
@@ -524,5 +545,6 @@ class Storage {
 // 创建全局实例
 const storage = new Storage();
 
-// 导出工具类和实例
-export { Storage, storage };
+// 导出为全局变量
+window.Storage = Storage;
+window.storage = storage;

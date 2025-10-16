@@ -1,0 +1,11 @@
+{
+    "testTime": "2025-10-16T22:23:11+08:00",
+    "summary": {
+        "total": 35,
+        "passed": 28,
+        "failed": 7,
+        "passRate": 80.0
+    },
+    "baseUrl": "http://localhost:3001",
+    "status": "FAILED"
+}

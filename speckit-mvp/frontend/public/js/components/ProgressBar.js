@@ -588,3 +588,6 @@ if (typeof document !== 'undefined') {
     styleElement.textContent = progressBarStyles;
     document.head.appendChild(styleElement);
 }
+
+// 导出为全局变量
+window.ProgressBar = ProgressBar;

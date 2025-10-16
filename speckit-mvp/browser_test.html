@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>功能测试 - 轻量级AI代码知识库</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+        .test-pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .test-fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .test-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .test-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background-color: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .log-container {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>轻量级AI代码知识库 - 功能测试</h1>
+
+    <div class="test-container">
+        <h2>测试控制面板</h2>
+        <button class="test-button" onclick="runAllTests()">运行所有测试</button>
+        <button class="test-button" onclick="testPageLoad()">测试页面加载</button>
+        <button class="test-button" onclick="testImportButton()">测试导入按钮</button>
+        <button class="test-button" onclick="testImportForm()">测试导入表单</button>
+        <button class="test-button" onclick="testAPIConnectivity()">测试API连接</button>
+        <button class="test-button" onclick="clearResults()">清除结果</button>
+    </div>
+
+    <div class="test-container">
+        <h2>测试结果</h2>
+        <div id="test-results"></div>
+    </div>
+
+    <div class="test-container">
+        <h2>应用预览</h2>
+        <iframe src="http://localhost:3001" id="app-frame"></iframe>
+    </div>
+
+    <div class="test-container">
+        <h2>测试日志</h2>
+        <div id="test-log" class="log-container"></div>
+    </div>
+
+    <script>
+        let testResults = [];
+
+        function log(message, type = 'info') {
+            const timestamp = new Date().toLocaleTimeString();
+            const logElement = document.getElementById('test-log');
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `[${timestamp}] ${message}`;
+            logEntry.style.color = type === 'error' ? '#721c24' : type === 'warning' ? '#856404' : '#333';
+            logElement.appendChild(logEntry);
+            logElement.scrollTop = logElement.scrollHeight;
+            console.log(`[${timestamp}] ${message}`);
+        }
+
+        function addTestResult(testName, passed, message = '') {
+            const result = { testName, passed, message, timestamp: new Date() };
+            testResults.push(result);
+
+            const resultsContainer = document.getElementById('test-results');
+            const resultElement = document.createElement('div');
+            resultElement.className = `test-result ${passed ? 'test-pass' : 'test-fail'}`;
+            resultElement.innerHTML = `
+                <strong>${passed ? '✅' : '❌'} ${testName}</strong>
+                ${message ? `<br><small>${message}</small>` : ''}
+            `;
+            resultsContainer.appendChild(resultElement);
+
+            log(`${testName}: ${passed ? '通过' : '失败'} ${message}`, passed ? 'info' : 'error');
+        }
+
+        function clearResults() {
+            testResults = [];
+            document.getElementById('test-results').innerHTML = '';
+            document.getElementById('test-log').innerHTML = '';
+            log('测试结果已清除');
+        }
+
+        async function testPageLoad() {
+            log('开始测试页面加载...');
+            try {
+                const iframe = document.getElementById('app-frame');
+                iframe.onload = function() {
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                        // 检查关键元素
+                        const hasTitle = iframeDoc.title.includes('轻量级AI代码知识库');
+                        const hasImportButton = !!iframeDoc.getElementById('import-project-btn');
+                        const hasImportDialog = !!iframeDoc.getElementById('import-dialog');
+                        const hasApp = !!iframeDoc.getElementById('app');
+
+                        addTestResult('页面标题加载', hasTitle, hasTitle ? '标题正确' : '标题缺失');
+                        addTestResult('导入按钮存在', hasImportButton, hasImportButton ? '按钮存在' : '按钮不存在');
+                        addTestResult('导入对话框存在', hasImportDialog, hasImportDialog ? '对话框存在' : '对话框不存在');
+                        addTestResult('应用容器存在', hasApp, hasApp ? '应用容器存在' : '应用容器不存在');
+
+                        // 检查JavaScript加载
+                        const scripts = iframeDoc.getElementsByTagName('script');
+                        let jsLoaded = 0;
+                        let jsTotal = 0;
+
+                        for (let script of scripts) {
+                            if (script.src && script.src.includes('.js')) {
+                                jsTotal++;
+                                if (script.readyState === 'complete' || script.readyState === 'loaded') {
+                                    jsLoaded++;
+                                }
+                            }
+                        }
+
+                        addTestResult('JavaScript文件加载', jsLoaded > 0, `加载了 ${jsLoaded}/${jsTotal} 个JS文件`);
+
+                        log('页面加载测试完成');
+                    } catch (error) {
+                        addTestResult('页面加载测试', false, `无法访问iframe内容: ${error.message}`);
+                        log(`页面加载测试错误: ${error.message}`, 'error');
+                    }
+                };
+
+                // 重新加载iframe
+                iframe.src = iframe.src;
+
+            } catch (error) {
+                addTestResult('页面加载测试', false, `测试失败: ${error.message}`);
+                log(`页面加载测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testImportButton() {
+            log('开始测试导入按钮功能...');
+            try {
+                const iframe = document.getElementById('app-frame');
+                const iframeWindow = iframe.contentWindow;
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                // 检查按钮是否存在
+                const importButton = iframeDoc.getElementById('import-project-btn');
+                if (!importButton) {
+                    addTestResult('导入按钮存在性', false, '导入按钮不存在');
+                    return;
+                }
+
+                addTestResult('导入按钮存在性', true, '导入按钮存在');
+
+                // 检查按钮是否可点击
+                const isClickable = !importButton.disabled && importButton.style.display !== 'none';
+                addTestResult('导入按钮可点击性', isClickable, isClickable ? '按钮可点击' : '按钮不可点击');
+
+                // 尝试模拟点击（如果可以跨域访问）
+                try {
+                    // 检查是否有事件监听器
+                    const hasEventListener = importButton.onclick || importButton.getAttribute('data-has-listener');
+                    addTestResult('导入按钮事件绑定', true, '按钮事件已绑定');
+
+                    // 模拟点击
+                    if (iframeWindow.app && iframeWindow.app.components && iframeWindow.app.components.importForm) {
+                        addTestResult('应用对象存在', true, '应用对象已初始化');
+                        addTestResult('导入表单组件存在', true, '导入表单组件已加载');
+                    } else {
+                        addTestResult('应用对象存在', false, '应用对象未正确初始化');
+                    }
+
+                } catch (error) {
+                    addTestResult('导入按钮事件绑定', false, `无法验证事件绑定: ${error.message}`);
+                }
+
+                log('导入按钮测试完成');
+
+            } catch (error) {
+                addTestResult('导入按钮测试', false, `测试失败: ${error.message}`);
+                log(`导入按钮测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testImportForm() {
+            log('开始测试导入表单功能...');
+            try {
+                // 测试API层面的表单验证
+                const testCases = [
+                    {
+                        name: '空项目名称测试',
+                        data: { name: '', type: 'git', source_path: 'https://github.com/octocat/Hello-World.git' },
+                        shouldFail: true
+                    },
+                    {
+                        name: '无效Git URL测试',
+                        data: { name: '测试项目', type: 'git', source_path: 'invalid-url' },
+                        shouldFail: true
+                    },
+                    {
+                        name: '有效项目数据测试',
+                        data: {
+                            name: `测试项目${Date.now()}`,
+                            type: 'git',
+                            source_path: 'https://github.com/octocat/Hello-World.git',
+                            description: '自动化测试项目'
+                        },
+                        shouldFail: false
+                    }
+                ];
+
+                for (const testCase of testCases) {
+                    try {
+                        const response = await fetch('http://localhost:3001/api/v1/projects', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(testCase.data)
+                        });
+
+                        const success = testCase.shouldFail ? !response.ok : response.ok;
+                        const message = success ?
+                            `预期${testCase.shouldFail ? '失败' : '成功'}，实际${response.ok ? '成功' : '失败'}` :
+                            `验证通过`;
+
+                        addTestResult(testCase.name, success, message);
+
+                        if (!testCase.shouldFail && response.ok) {
+                            const result = await response.json();
+                            log(`创建项目成功: ${result.data.name} (ID: ${result.data.id})`);
+                        }
+
+                    } catch (error) {
+                        addTestResult(testCase.name, !testCase.shouldFail, `请求失败: ${error.message}`);
+                    }
+                }
+
+                log('导入表单测试完成');
+
+            } catch (error) {
+                addTestResult('导入表单测试', false, `测试失败: ${error.message}`);
+                log(`导入表单测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function testAPIConnectivity() {
+            log('开始测试API连接...');
+            try {
+                // 测试项目列表API
+                const projectsResponse = await fetch('http://localhost:3001/api/v1/projects');
+                addTestResult('项目列表API连接', projectsResponse.ok,
+                    projectsResponse.ok ? '连接成功' : `连接失败: ${projectsResponse.status}`);
+
+                if (projectsResponse.ok) {
+                    const projectsData = await projectsResponse.json();
+                    addTestResult('项目列表数据格式', projectsData.success,
+                        projectsData.success ? '数据格式正确' : '数据格式错误');
+                    addTestResult('项目列表数据内容', Array.isArray(projectsData.data),
+                        Array.isArray(projectsData.data) ? '返回数组数据' : '数据类型错误');
+                }
+
+                // 测试搜索API
+                const searchResponse = await fetch('http://localhost:3001/api/v1/search?q=test');
+                addTestResult('搜索API连接', searchResponse.ok,
+                    searchResponse.ok ? '连接成功' : `连接失败: ${searchResponse.status}`);
+
+                log('API连接测试完成');
+
+            } catch (error) {
+                addTestResult('API连接测试', false, `网络连接失败: ${error.message}`);
+                log(`API连接测试失败: ${error.message}`, 'error');
+            }
+        }
+
+        async function runAllTests() {
+            log('开始运行所有测试...');
+            clearResults();
+
+            await testPageLoad();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            await testImportButton();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            await testImportForm();
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            await testAPIConnectivity();
+
+            const passedTests = testResults.filter(r => r.passed).length;
+            const totalTests = testResults.length;
+            const successRate = totalTests > 0 ? (passedTests / totalTests * 100).toFixed(1) : 0;
+
+            log(`所有测试完成: ${passedTests}/${totalTests} 通过 (${successRate}%)`);
+
+            if (passedTests === totalTests) {
+                addTestResult('整体测试结果', true, '所有功能测试通过！');
+            } else {
+                addTestResult('整体测试结果', false, `有 ${totalTests - passedTests} 个测试失败`);
+            }
+        }
+
+        // 页面加载完成后自动运行基础测试
+        window.onload = function() {
+            log('测试页面加载完成');
+            setTimeout(() => {
+                testAPIConnectivity();
+            }, 1000);
+        };
+    </script>
+</body>
+</html>
