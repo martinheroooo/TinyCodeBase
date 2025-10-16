@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>修复验证测试</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; }
+        .success { color: green; }
+        .error { color: red; }
+        .loading { color: blue; }
+        pre { background: #f5f5f5; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>轻量级AI代码知识库 - 修复验证测试</h1>
+
+    <div class="test-section">
+        <h2>1. API路径测试</h2>
+        <div id="api-test" class="loading">测试中...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>2. 存储工具测试</h2>
+        <div id="storage-test" class="loading">测试中...</div>
+    </div>
+
+    <div class="test-section">
+        <h2>3. 导入组件测试</h2>
+        <div id="import-test" class="loading">测试中...</div>
+        <button onclick="testImportForm()">测试导入表单</button>
+    </div>
+
+    <div class="test-section">
+        <h2>4. 应用初始化测试</h2>
+        <div id="app-test" class="loading">测试中...</div>
+    </div>
+
+    <!-- JavaScript工具类 -->
+    <script src="js/utils/api.js"></script>
+    <script src="js/utils/dom.js"></script>
+    <script src="js/utils/storage.js"></script>
+
+    <!-- JavaScript组件 -->
+    <script src="js/components/ImportForm.js"></script>
+    <script src="js/components/ProgressBar.js"></script>
+    <script src="js/components/SearchBox.js"></script>
+    <script src="js/components/ProjectCard.js"></script>
+    <script src="js/components/SearchResult.js"></script>
+
+    <!-- 主应用 -->
+    <script src="js/app.js"></script>
+
+    <script>
+        // 测试API路径修复
+        async function testAPIPath() {
+            const resultDiv = document.getElementById('api-test');
+            try {
+                console.log('测试API路径...');
+                const response = await window.api.get('/projects');
+                console.log('API响应:', response);
+
+                if (response.success && response.data) {
+                    resultDiv.innerHTML = `<span class="success">✅ API路径修复成功</span><br>
+                        <pre>${JSON.stringify(response, null, 2)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ API响应格式错误</span>`;
+                }
+            } catch (error) {
+                console.error('API测试失败:', error);
+                resultDiv.innerHTML = `<span class="error">❌ API路径测试失败: ${error.message}</span>`;
+            }
+        }
+
+        // 测试存储工具修复
+        function testStorage() {
+            const resultDiv = document.getElementById('storage-test');
+            try {
+                console.log('测试存储工具...');
+
+                // 测试set和get方法
+                window.storage.set('test_key', { data: 'test_value' });
+                const value = window.storage.get('test_key');
+
+                if (value && value.data === 'test_value') {
+                    resultDiv.innerHTML = `<span class="success">✅ 存储工具修复成功</span><br>
+                        <pre>设置: { data: 'test_value' }<br>获取: ${JSON.stringify(value)}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ 存储工具测试失败</span>`;
+                }
+            } catch (error) {
+                console.error('存储测试失败:', error);
+                resultDiv.innerHTML = `<span class="error">❌ 存储工具测试失败: ${error.message}</span>`;
+            }
+        }
+
+        // 测试导入表单
+        function testImportForm() {
+            const resultDiv = document.getElementById('import-test');
+            try {
+                console.log('测试导入表单...');
+
+                // 创建导入表单实例
+                const importForm = new window.ImportForm({
+                    onSubmit: (data) => {
+                        console.log('导入提交:', data);
+                        resultDiv.innerHTML += `<br><span class="success">✅ 导入表单提交测试成功</span>`;
+                    },
+                    onCancel: () => {
+                        console.log('导入取消');
+                        resultDiv.innerHTML += `<br><span class="success">✅ 导入表单取消测试成功</span>`;
+                    }
+                });
+
+                // 测试取消方法（不会产生无限递归）
+                importForm.hide();
+
+                resultDiv.innerHTML = `<span class="success">✅ 导入表单修复成功，无无限递归问题</span>`;
+            } catch (error) {
+                console.error('导入表单测试失败:', error);
+                resultDiv.innerHTML = `<span class="error">❌ 导入表单测试失败: ${error.message}</span>`;
+            }
+        }
+
+        // 测试应用初始化
+        function testAppInit() {
+            const resultDiv = document.getElementById('app-test');
+            try {
+                console.log('测试应用初始化...');
+
+                // 检查全局变量是否正确加载
+                const globals = ['api', 'storage', 'domUtils', 'ImportForm', 'ProgressBar', 'SearchBox', 'ProjectCard', 'SearchResult'];
+                const missing = globals.filter(name => !window[name]);
+
+                if (missing.length === 0) {
+                    resultDiv.innerHTML = `<span class="success">✅ 全局组件加载成功</span><br>
+                        <pre>已加载: ${globals.join(', ')}</pre>`;
+                } else {
+                    resultDiv.innerHTML = `<span class="error">❌ 缺少全局组件: ${missing.join(', ')}</span>`;
+                }
+            } catch (error) {
+                console.error('应用初始化测试失败:', error);
+                resultDiv.innerHTML = `<span class="error">❌ 应用初始化测试失败: ${error.message}</span>`;
+            }
+        }
+
+        // 运行所有测试
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                testAPIPath();
+                testStorage();
+                testAppInit();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

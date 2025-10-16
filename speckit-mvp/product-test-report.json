@@ -1,0 +1,155 @@
+{
+  "totalTests": 5,
+  "passedTests": 5,
+  "failedTests": 0,
+  "passRate": 100,
+  "allCriticalPassed": true,
+  "results": [
+    {
+      "test": "前端页面访问测试",
+      "passed": true,
+      "message": "前端页面正常加载，包含所有关键元素",
+      "details": {
+        "statusCode": 200,
+        "hasImportButton": true,
+        "hasModal": true,
+        "hasProgressBar": true,
+        "hasSearchInput": true,
+        "hasAppScript": true
+      },
+      "timestamp": "2025-10-16T14:32:59.798Z"
+    },
+    {
+      "test": "后端API测试",
+      "passed": true,
+      "message": "后端API正常工作",
+      "details": {
+        "projectsApi": {
+          "working": true,
+          "statusCode": 200
+        },
+        "createApi": {
+          "working": true,
+          "statusCode": 201,
+          "createdProjectId": 16
+        }
+      },
+      "timestamp": "2025-10-16T14:32:59.804Z"
+    },
+    {
+      "test": "静态资源加载测试",
+      "passed": true,
+      "message": "11/11 资源加载成功",
+      "details": {
+        "/css/style.css": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 4560
+        },
+        "/css/components.css": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 9671
+        },
+        "/js/utils/api.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 9961
+        },
+        "/js/utils/dom.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 14762
+        },
+        "/js/utils/storage.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 12703
+        },
+        "/js/components/ImportForm.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 14498
+        },
+        "/js/components/ProgressBar.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 14166
+        },
+        "/js/components/SearchBox.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 13095
+        },
+        "/js/components/ProjectCard.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 9725
+        },
+        "/js/components/SearchResult.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 15964
+        },
+        "/js/app.js": {
+          "loaded": true,
+          "statusCode": 200,
+          "size": 16750
+        }
+      },
+      "timestamp": "2025-10-16T14:32:59.817Z"
+    },
+    {
+      "test": "JavaScript内容测试",
+      "passed": true,
+      "message": "4/4 JavaScript文件内容正常",
+      "details": {
+        "/js/utils/api.js": {
+          "valid": true,
+          "hasClassDefinition": true,
+          "hasNoCriticalErrors": true
+        },
+        "/js/components/ImportForm.js": {
+          "valid": true,
+          "hasClassDefinition": true,
+          "hasNoCriticalErrors": true
+        },
+        "/js/components/ProgressBar.js": {
+          "valid": true,
+          "hasClassDefinition": true,
+          "hasNoCriticalErrors": true
+        },
+        "/js/app.js": {
+          "valid": true,
+          "hasClassDefinition": true,
+          "hasNoCriticalErrors": true
+        }
+      },
+      "timestamp": "2025-10-16T14:32:59.821Z"
+    },
+    {
+      "test": "API健康状态测试",
+      "passed": true,
+      "message": "1/4 端点响应正常",
+      "details": {
+        "/api/v1/ping": {
+          "healthy": false,
+          "statusCode": 404
+        },
+        "/api/v1/health": {
+          "healthy": false,
+          "statusCode": 404
+        },
+        "/api/v1/status": {
+          "healthy": false,
+          "statusCode": 404
+        },
+        "/api/v1/": {
+          "healthy": true,
+          "statusCode": 200
+        }
+      },
+      "timestamp": "2025-10-16T14:32:59.823Z"
+    }
+  ]
+}
