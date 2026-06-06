@@ -4,18 +4,14 @@ from typing import Annotated, Callable, Any, Dict
 from langgraph.graph.message import add_messages
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import ToolNode,tools_condition
-from aihubmix_embedding import AIHubMixEmbedding
 from config import AgentConfig
-from tools import Tools
 from langgraph.checkpoint.memory import InMemorySaver
-import sqlite3
-from langgraph.checkpoint.sqlite import SqliteSaver
 from langgraph.store.memory import InMemoryStore
 
 
 
 main_agent_config = AgentConfig(
-    model_name="Doubao-1.5-lite-32k",
+    model_name="qwen-plus",
     temperature=0.1,
     max_tokens=4000,
 )
@@ -24,11 +20,9 @@ class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 if __name__ == "__main__":
-    conn = sqlite3.connect("checkpoints.sqlite", check_same_thread=False)
-    memory = SqliteSaver(conn)
+    memory = InMemorySaver()
 
-    embeddings = AIHubMixEmbedding()
-    store = InMemoryStore(index={"embed": embeddings, "dims": 1536})
+    store = InMemoryStore()
 
     namespace = ("users", "memories")
     store.put(  

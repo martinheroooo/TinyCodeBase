@@ -8,18 +8,26 @@
 @Version :   1.0
 @Desc    :   Agent LLM
 '''
-OPENAI_BASE_URL = "https://aihubmix.com/v1"
+from typing import Optional
+
+from env_utils import DASHSCOPE_BASE_URL, get_env
 
 
 class AgentLLM:
-    def __init__(self, path: str = '', model: str = "Doubao-1.5-lite-32k") -> None:
-        self.model = model
+    def __init__(self, path: str = '', model: Optional[str] = None) -> None:
+        self.model = model or get_env("DASHSCOPE_MODEL", "qwen-plus")
+        self.api_key = get_env("DASHSCOPE_API_KEY")
+        self.base_url = get_env("DASHSCOPE_BASE_URL", DASHSCOPE_BASE_URL)
 
     def chat(self, prompt: str, history: list[dict], meta_instruction: str) -> tuple[str, list[dict]]:
         from openai import OpenAI
+
+        if not self.api_key:
+            raise RuntimeError("DASHSCOPE_API_KEY is not set")
+
         client = OpenAI(
-            api_key="sk-En8qPIGvNTidf5kvE0F44dC4CfC248A384D34428EaF116Bb",
-            base_url=OPENAI_BASE_URL
+            api_key=self.api_key,
+            base_url=self.base_url,
         )
 
         messages = []

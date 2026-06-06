@@ -44,6 +44,7 @@ class Agent:
         print("-"*10 + "system_prompt" + "-"*10)
         return sys_prompt
     
+    # 执行阶段：解析模型输出并调用工具，并总结输出结果
     def parse_latest_plugin_call(self, text):
         plugin_name, plugin_args = '', ''
         i = text.rfind('\nAction:')
@@ -58,6 +59,7 @@ class Agent:
             text = text[:k]
         return plugin_name, plugin_args, text
     
+    # 读取大模型请求执行的方法，并执行
     def call_plugin(self, plugin_name, plugin_args):
         plugin_args = json5.loads(plugin_args)
 
@@ -71,6 +73,8 @@ class Agent:
         elif plugin_name == 'code_check':
             return '\nObservation:' + self.tool.code_check(**plugin_args)
 
+    # 决策阶段：模型解析用户问题并生成工具调用指令
+    # 告诉大模型整体的流程和用户提出的问题，让大模型进行思考，并决定使用什么工具。
     def text_completion(self, text, history=[]):
         text = "\nQuestion:" + text
         response, his = self.model.chat(text, history, self.system_prompt)
@@ -87,4 +91,3 @@ class Agent:
         response, his = self.model.chat(response, his, self.system_prompt)
         return response, his
     
-

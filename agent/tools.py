@@ -9,10 +9,13 @@
 @Desc    :   Tools, 提供多种工具类
 '''
 
-import os, json
+import json
+
 import requests
 
+from env_utils import get_env
 from tree_sitter_parser import check_code
+
 
 class Tools:
     def __init__(self) -> None:
@@ -66,10 +69,13 @@ class Tools:
             str: 搜索结果
         """
         url = "https://google.serper.dev/search"
+        api_key = get_env("SERPER_API_KEY") or get_env("GOOGLE_SEARCH_API_KEY")
+        if not api_key:
+            raise RuntimeError("SERPER_API_KEY is not set")
 
         payload = json.dumps({"q": search_query})
         headers = {
-            'X-API-KEY': 'xxxxxx',
+            'X-API-KEY': api_key,
             'Content-Type': 'application/json'
         }
 
@@ -89,4 +95,3 @@ class Tools:
             str: 代码检查结果
         """
         return check_code(language, source_code)
-

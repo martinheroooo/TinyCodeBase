@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import Dict, Any, Optional
-import os
+
+from env_utils import DASHSCOPE_BASE_URL, get_env
 
 @dataclass
 class AgentConfig:
@@ -24,7 +25,7 @@ class AgentConfig:
         """初始化后处理"""
         # 从环境变量加载API密钥
         if self.openai_api_key is None:
-            self.openai_api_key = "sk-En8qPIGvNTidf5kvE0F44dC4CfC248A384D34428EaF116Bb"
+            self.openai_api_key = get_env("DASHSCOPE_API_KEY")
         
         if self.openai_base_url is None:
-            self.openai_base_url = "https://aihubmix.com/v1"
+            self.openai_base_url = get_env("DASHSCOPE_BASE_URL", DASHSCOPE_BASE_URL)

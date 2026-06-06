@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import ast
+
 from tree_sitter_languages import get_parser
 
 from tree_sitter import Tree
@@ -39,9 +41,21 @@ def walk_tree(node: Node, depth: int = 0) -> Node:
     return None
 
 def check_code(language: str, code: str) -> str:
-    if language.lower() not in supported_languages:
+    language = language.lower()
+    if language not in supported_languages:
         return "language not supported"
-    tree = get_parser(language.lower()).parse(code.encode('utf-8'))
+
+    try:
+        tree = get_parser(language).parse(code.encode('utf-8'))
+    except Exception as exc:
+        if language == "python":
+            try:
+                ast.parse(code)
+            except SyntaxError as syntax_error:
+                return f"code compile error at line {syntax_error.lineno}, column {syntax_error.offset}: {syntax_error.msg}"
+            return "code compile success"
+        return f"code parser unavailable: {exc}"
+
     result = walk_tree(tree.root_node)
     if result:
         return "code compile error at " + str(result.start_point) + " to " + str(result.end_point) + ",\n the error text is: \"" + str(result.text) + "\""
